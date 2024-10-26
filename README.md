@@ -2,6 +2,17 @@
 
 A simple CLI tool to generate Express servers from multiple available templates. [View on NPM](https://www.npmjs.com/package/quick_start_express)
 
+# Install Package from npm
+
+1. Run the following command in the terminal to install the required `node` packages:
+
+```bash
+    npm i -g quick_start_express
+```
+> ⚠️ **WARNING:** `qse` requires a global install with `-g`. It doesn't work with a local install without `-g`.
+
+2. Run any qse commands in the target directory such as `qse init`, `qse clear`, `qse -v` ... etc. 
+
 # Commands
 
 ## Version
@@ -54,16 +65,6 @@ qse clear
 
 <br>
 
-# Install Package from npm
-
-1. Run the following command in the terminal to install the required `node` packages:
-
-```bash
-    npm i -g @cse-25/qse
-```
-
-2. Run any qse commands in the target directory such as `qse init`, `qse clear`, `qse -v` ... etc. 
-
 # Contributing
 
 Follow the guidelines in [CONTRIBUTING.md](https://github.com/CSE-25/quick_start_express/tree/main/.github/CONTRIBUTING.md) to contribute to the project.
@@ -98,7 +99,7 @@ Follow the guidelines in [CONTRIBUTING.md](https://github.com/CSE-25/quick_start
    ```
 
    ```bash
-   npm link qse # in the target directory
+   npm link quick_start_express # in the target directory
    ```
 
 2. Run any qse commands in the target directory such as `qse init`, `qse clear`, `qse -v` ... etc. 
