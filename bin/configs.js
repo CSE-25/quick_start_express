@@ -1,6 +1,6 @@
 export const metadata = {
   name: "Quick Start Express",
-  version: "v1.0.0",
+  version: "v1.0.4-beta",
   description:
     "A simple CLI tool to generate Express servers from multiple available templates.",
   oneLineDescription: "A simple Express.js server generator CLI tool.",
