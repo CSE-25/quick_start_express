@@ -143,7 +143,7 @@ To test the CLI tool locally, you need to link the package. Use a separate testi
 
 ## Running Tests
 
-To execute the tests, ensure you are in the root directory of the `quick_start_express` project, then run the following command:
+To execute the tests, navigate to the root directory of the `quick_start_express` project where all dependencies are installed, and run the following command:
 
 ```bash
 npm test
