@@ -1,2 +1,4 @@
-export * from './config.type';
-export * from './user.type';
+export * from './configType';
+export * from './userType';
+
+// Export all types from a single location across the entire application

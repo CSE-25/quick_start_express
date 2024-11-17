@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { User } from '../models/user.model';
+import { User } from '../models/userModel';
 import type { Request, Response } from 'express';
 
 // Sample endpoint

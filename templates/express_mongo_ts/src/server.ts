@@ -10,11 +10,11 @@ import type { TServerConfig } from './types';
 
 export class InitServer {
   server: Express;
-  database: typeof mongoose;
+  db: typeof mongoose;
 
   constructor() {
     this.server = express();
-    this.database = mongoose;
+    this.db = mongoose;
   }
 
   setup(config: TServerConfig) {
@@ -27,7 +27,7 @@ export class InitServer {
     // Setup middlewares
     this.server.use(cors());
     this.server.use(helmet());
-    this.server.use(morgan('tiny'));
+    this.server.use(morgan('tiny'));    // HTTP request logger to stdout
     this.server.use(cookieParser());
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: false }));
@@ -46,7 +46,7 @@ export class InitServer {
     const port = this.server.get('port');
 
     try {
-      await this.database.connect(process.env.DB_URL!);
+      await this.db.connect(process.env.DB_URL!);
       this.server.listen(port, () => console.log(`[server]: Server is running at ${host}:${port}`));
     } catch (error) {
       console.error(error);

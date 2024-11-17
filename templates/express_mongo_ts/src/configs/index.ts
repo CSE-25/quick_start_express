@@ -1,3 +1,3 @@
-export * as server from "./server.config"
+export * as server from "./serverConfig"
 
-// Add other configs and expor them from configs/index.ts
+// Add other configs and export them from configs/index.ts
