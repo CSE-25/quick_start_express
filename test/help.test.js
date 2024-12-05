@@ -20,7 +20,7 @@ describe('Help Command', () => {
     test('help', async () => {
         const { stdout, stderr } = await exec('node bin/index.js help');
         expect(stdout).toEqual(help);
-        expect(stderr).toEqual('aa');
+        expect(stderr).toEqual('');
     })
     test('--help', async () => {
         const { stdout, stderr } = await exec('node bin/index.js --help');
