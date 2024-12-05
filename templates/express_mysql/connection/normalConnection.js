@@ -6,7 +6,6 @@ const connectToDb = () => {
     let db = null
     try {
         db = createConnection(appConfig.db)
-        appendFileSync('./logs/connection/normalConnection.log', 'asdada');
         return db
     } catch (err) {
         const timeStamp = new Date().toLocaleString();
