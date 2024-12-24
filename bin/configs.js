@@ -20,6 +20,10 @@ export const commands = {
         flags: "-t, --template <template>",
         description: "Specify template to use",
       },
+      {
+        flags: "-n, --name <name>",
+        description: "Specify the name of the package",
+      },
     ],
   },
   list: {

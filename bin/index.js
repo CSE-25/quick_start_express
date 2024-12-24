@@ -22,6 +22,7 @@ program
   .command(commands.init.command)
   .description(commands.init.description)
   .option(commands.init.options[0].flags, commands.init.options[0].description)
+  .option(commands.init.options[1].flags, commands.init.options[1].description)
   .action((options) => {
     toolIntro();
     initCommand(options);
@@ -35,12 +36,20 @@ program
     Object.keys(commands).forEach((cmd) => {
       const commandInfo = commands[cmd];
       if (commandInfo.command) {
-        console.log(`- ${commandInfo.command}${commandInfo.description ? ": " + commandInfo.description : ""}`);
+        console.log(
+          `- ${commandInfo.command}${
+            commandInfo.description ? ": " + commandInfo.description : ""
+          }`
+        );
       }
 
       if (commandInfo.options) {
         commandInfo.options.forEach((option) => {
-          console.log(`  (Options: ${option.flags}${option.description ? " - " + option.description : ""})`);
+          console.log(
+            `  (Options: ${option.flags}${
+              option.description ? " - " + option.description : ""
+            })`
+          );
         });
       }
     });
@@ -80,9 +89,14 @@ program
 
 function initCommand(options) {
   const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
+  const packageName = options.name || "quick-start-express-server"; // Default to 'quick-start-express-server' if no name is specified
 
   if (!templates[selectedTemplate]) {
-    console.error(chalk.bgRed.white(`Template ${selectedTemplate} does not exist. To see available templates use "qse list".`));
+    console.error(
+      chalk.bgRed.white(
+        `Template ${selectedTemplate} does not exist. To see available templates use "qse list".`
+      )
+    );
     return;
   }
 
@@ -90,7 +104,11 @@ function initCommand(options) {
 
   const targetDir = process.cwd();
   const parentDir = path.dirname(__dirname);
-  const templatePath = path.join(parentDir, "templates", templates[selectedTemplate].name);
+  const templatePath = path.join(
+    parentDir,
+    "templates",
+    templates[selectedTemplate].name
+  );
   const destinationPath = path.join(targetDir);
   const npmInit = chalk.yellow.bold("npm init");
 
@@ -98,6 +116,12 @@ function initCommand(options) {
   const initSpinner = createSpinner(`Running ${npmInit}...`).start();
   try {
     execSync("npm init -y", { stdio: "ignore", cwd: targetDir });
+
+    const packageJsonPath = path.join(targetDir, "package.json");
+    const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
+    const packageJson = JSON.parse(packageJsonContent);
+    packageJson.name = packageName;
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     initSpinner.success({ text: `${npmInit} completed successfully.` });
   } catch (err) {
@@ -116,7 +140,9 @@ function initCommand(options) {
     console.error(err.message);
   }
 
-  const addTypeDeclaration = createSpinner("Adding type declaration...").start();
+  const addTypeDeclaration = createSpinner(
+    "Adding type declaration..."
+  ).start();
   try {
     const packageJsonPath = path.join(targetDir, "package.json");
     const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
@@ -124,35 +150,45 @@ function initCommand(options) {
     packageJson.type = "module";
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-    addTypeDeclaration.success({ text: "Added type declaration successfully." });
+    addTypeDeclaration.success({
+      text: "Added type declaration successfully.",
+    });
   } catch (err) {
     addTypeDeclaration.error({ text: "Error adding type declaration.\n" });
     console.error(err.message);
   }
 
-  const addDependencies = createSpinner("Adding dependency packages...").start();
+  const addDependencies = createSpinner(
+    "Adding dependency packages..."
+  ).start();
   try {
     const packageJsonPath = path.join(targetDir, "package.json");
     const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
     const packageJson = JSON.parse(packageJsonContent);
     packageJson.dependencies = packageJson.dependencies || {};
-    
+
     templates[selectedTemplate].dependencies.forEach((dependency) => {
       packageJson.dependencies[`${dependency.name}`] = dependency.version;
     });
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-    addDependencies.success({ text: "Added dependency packages successfully." });
+    addDependencies.success({
+      text: "Added dependency packages successfully.",
+    });
   } catch (err) {
     addDependencies.error("Error adding dependency packages.\n");
     console.error(err.message);
   }
 
-  const installDependencies = createSpinner("Installing dependency packages...").start();
+  const installDependencies = createSpinner(
+    "Installing dependency packages..."
+  ).start();
   try {
     execSync("npm i", { stdio: "ignore", cwd: targetDir });
 
-    installDependencies.success({ text: "Installed dependencies successfully." });
+    installDependencies.success({
+      text: "Installed dependencies successfully.",
+    });
   } catch (err) {
     installDependencies.error({ text: "Error installing dependencies.\n" });
     console.error(err);
@@ -160,7 +196,7 @@ function initCommand(options) {
 
   console.log(chalk.green.bold("\nSetup complete! To run your server:"));
   console.log(chalk.yellow("Run:"), chalk.white.bold("npm start"));
-};
+}
 
 const toolIntro = () => {
   console.log(
