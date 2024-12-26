@@ -9,6 +9,7 @@ import figlet from "figlet";
 import chalk from "chalk";
 import { createSpinner } from "nanospinner";
 import { metadata, commands, templates } from "./configs.js";
+import validate from "validate-npm-package-name";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -91,10 +92,32 @@ function initCommand(options) {
   const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
   const packageName = options.name || "quick-start-express-server"; // Default to 'quick-start-express-server' if no name is specified
 
+  if (packageName) {
+    const validateResult = validate(packageName);
+    if (validateResult.validForNewPackages === false) {
+      if (validateResult.errors) {
+        console.error(
+          chalk.red.bold(
+            `Invalid package name: ${validateResult.errors}. Please provide a valid package name.`
+          )
+        );
+      } else if (validateResult.warnings) {
+        console.error(
+          chalk.red.bold(
+            `Invalid package name: ${validateResult.warnings}. Please provide a valid package name.`
+          )
+        );
+      }
+      return;
+    }
+  }
+
   if (!templates[selectedTemplate]) {
     console.error(
-      chalk.bgRed.white(
-        `Template ${selectedTemplate} does not exist. To see available templates use "qse list".`
+      chalk.red(
+        `Template ${selectedTemplate} does not exist. To see available templates use ${chalk.yellow(
+          '"qse list"'
+        )}.`
       )
     );
     return;
