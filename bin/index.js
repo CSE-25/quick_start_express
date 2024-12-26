@@ -115,7 +115,9 @@ function initCommand(options) {
   if (!templates[selectedTemplate]) {
     console.error(
       chalk.red(
-        `Template ${selectedTemplate} does not exist. To see available templates use ${chalk.yellow(
+        `Template ${chalk.bgRed.bold(
+          selectedTemplate
+        )} does not exist. To see available templates use ${chalk.yellow(
           '"qse list"'
         )}.`
       )
