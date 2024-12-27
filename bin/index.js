@@ -142,12 +142,6 @@ function initCommand(options) {
   try {
     execSync("npm init -y", { stdio: "ignore", cwd: targetDir });
 
-    const packageJsonPath = path.join(targetDir, "package.json");
-    const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
-    const packageJson = JSON.parse(packageJsonContent);
-    packageJson.name = packageName;
-    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-
     initSpinner.success({ text: `${npmInit} completed successfully.` });
   } catch (err) {
     initSpinner.error({ text: `Error running ${npmInit}:\n` });
@@ -172,6 +166,7 @@ function initCommand(options) {
     const packageJsonPath = path.join(targetDir, "package.json");
     const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
     const packageJson = JSON.parse(packageJsonContent);
+    packageJson.name = packageName;
     packageJson.type = "module";
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
