@@ -128,26 +128,10 @@ function initCommand(options) {
   console.log("Starting server initialization...");
 
   const targetDir = process.cwd();
-  const parentDir = path.dirname(__dirname);
-  const templatePath = path.join(
-    parentDir,
-    "templates",
-    templates[selectedTemplate].name
-  );
+  const templatePath = path.join(__dirname, "../templates", selectedTemplate);
+
   const destinationPath = path.join(targetDir);
   const npmInit = chalk.yellow.bold("npm init");
-
-  // Initialize package.json
-  const initSpinner = createSpinner(`Running ${npmInit}...`).start();
-  try {
-    execSync("npm init -y", { stdio: "ignore", cwd: targetDir });
-
-    initSpinner.success({ text: `${npmInit} completed successfully.` });
-  } catch (err) {
-    initSpinner.error({ text: `Error running ${npmInit}:\n` });
-    console.error(err.message);
-    return;
-  }
 
   const copySpinner = createSpinner("Creating server files...").start();
   try {
@@ -159,44 +143,22 @@ function initCommand(options) {
     console.error(err.message);
   }
 
-  const addTypeDeclaration = createSpinner(
-    "Adding type declaration..."
+  const addNameAndTypeSpinner = createSpinner(
+    "Adding name and type declaration..."
   ).start();
   try {
     const packageJsonPath = path.join(targetDir, "package.json");
     const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
     const packageJson = JSON.parse(packageJsonContent);
-    packageJson.name = packageName;
-    packageJson.type = "module";
+    packageJson.name = packageName; // Set custom package name
+    packageJson.type = "module"; // Define type as module
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-    addTypeDeclaration.success({
-      text: "Added type declaration successfully.",
+    addNameAndTypeSpinner.success({
+      text: "Added name and type declaration successfully.",
     });
   } catch (err) {
-    addTypeDeclaration.error({ text: "Error adding type declaration.\n" });
-    console.error(err.message);
-  }
-
-  const addDependencies = createSpinner(
-    "Adding dependency packages..."
-  ).start();
-  try {
-    const packageJsonPath = path.join(targetDir, "package.json");
-    const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
-    const packageJson = JSON.parse(packageJsonContent);
-    packageJson.dependencies = packageJson.dependencies || {};
-
-    templates[selectedTemplate].dependencies.forEach((dependency) => {
-      packageJson.dependencies[`${dependency.name}`] = dependency.version;
-    });
-    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-
-    addDependencies.success({
-      text: "Added dependency packages successfully.",
-    });
-  } catch (err) {
-    addDependencies.error("Error adding dependency packages.\n");
+    addNameAndTypeSpinner.error({ text: "Error adding type declaration.\n" });
     console.error(err.message);
   }
 
