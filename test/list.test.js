@@ -5,6 +5,7 @@ const list = `Available Commands:
 - -v, --version: Prints current qse version
 - init: Initialize a new Express server.
   (Options: -t, --template <template> - Specify template to use)
+  (Options: -n, --name <name> - Specify the name of the package)
 - list: List all available commands and options.
 - clear: Clear the directory.
 

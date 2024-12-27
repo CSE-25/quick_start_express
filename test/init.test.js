@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const util = require('node:util');
 const exec = util.promisify(require('node:child_process').exec);
 const tempDir = path.join(__dirname, 'temp');
+const stripAnsi = require('strip-ansi');
 
 function initTempDirectory() {
     if (fs.existsSync(tempDir)) {
@@ -95,6 +96,6 @@ describe('init', () => {
 
     test('invalid template name passed', async () => {
         const { stdout, stderr } = await exec(`node ../../bin/index.js init -t invalid_name`, { cwd: tempDir });
-        expect(stderr).toContain(`Template invalid_name does not exist. To see available templates use "qse list".`);
+        expect(stripAnsi(stderr)).toContain(`Template invalid_name does not exist. To see available templates use "qse list".`);
     });
 });
