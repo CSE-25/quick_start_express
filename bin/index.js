@@ -131,7 +131,6 @@ function initCommand(options) {
   const templatePath = path.join(__dirname, "../templates", selectedTemplate);
 
   const destinationPath = path.join(targetDir);
-  const npmInit = chalk.yellow.bold("npm init");
 
   const copySpinner = createSpinner("Creating server files...").start();
   try {
