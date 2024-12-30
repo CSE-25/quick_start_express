@@ -95,20 +95,13 @@ function initCommand(options) {
   if (packageName) {
     const validateResult = validate(packageName);
     if (validateResult.validForNewPackages === false) {
-      if (validateResult.errors) {
+        const errors = validateResult.errors || validateResult.warnings;
         console.error(
-          chalk.red.bold(
-            `Invalid package name: ${validateResult.errors}. Please provide a valid package name.`
-          )
+        chalk.red.bold(
+            `Invalid package name: ${errors.join(", ")}. Please provide a valid package name.`
+        )
         );
-      } else if (validateResult.warnings) {
-        console.error(
-          chalk.red.bold(
-            `Invalid package name: ${validateResult.warnings}. Please provide a valid package name.`
-          )
-        );
-      }
-      return;
+        return;
     }
   }
 
