@@ -13,7 +13,7 @@ import validate from "validate-npm-package-name";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const parentDir = path.join(__dirname, "..");
+const parentDir = path.dirname(__dirname);
 
 program
   .name(metadata.command)
@@ -122,7 +122,7 @@ async function initCommand(options) {
   console.log("Starting server initialization...");
 
   const targetDir = process.cwd();
-  const templatePath = path.join(parentDir, "templates", selectedTemplate);
+  const templatePath = path.join(parentDir, "templates", templates[selectedTemplate].name);
 
   const destinationPath = path.join(targetDir);
 
