@@ -4,11 +4,19 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync } fr
 import { fileURLToPath } from 'url';
 import { exec as execCallback } from 'child_process';
 import { promisify } from 'util';
+import stripAnsi from 'strip-ansi';
 
 const exec = promisify(execCallback);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const tempDir = path.join(__dirname, 'temp');
-const stripAnsi = require('strip-ansi');
+
+function verifyPackageName(expectedName) {
+    const packageJsonPath = path.join(tempDir, 'package.json');
+    const packageJsonContent = readFileSync(packageJsonPath, 'utf8');
+    const packageJson = JSON.parse(packageJsonContent);
+
+    expect(packageJson.name).toBe(expectedName);
+}
 
 function initTempDirectory() {
     if (existsSync(tempDir)) {
@@ -116,40 +124,25 @@ describe('init', () => {
     });
 
     test('invalid template name: contains non URL friendly charcters', async () => {
-        const { stderr } = await exec(`node ../../bin/index.js init -n "#invalid name"`, { cwd: tempDir });
+        const { stderr } = await exec(`node ../../bin/index.js init -n "#invalid name%"`, { cwd: tempDir });
         expect(stripAnsi(stderr)).toContain('Invalid package name: name can only contain URL-friendly characters. Please provide a valid package name.');
     });
 
     test('valid template name: <= 214 characters', async () => {
         const validName = 'a'.repeat(214);
         await exec(`node ../../bin/index.js init -t basic -n ${validName}`, { cwd: tempDir });
-
-        const packageJsonPath = path.join(tempDir, 'package.json');
-        const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-        const packageJson = JSON.parse(packageJsonContent);
-
-        expect(packageJson.name).toBe(validName);
+        verifyPackageName(validName);
     });
 
     test('valid template name: lowercase only', async () => {
         const validName = 'validname';
         await exec(`node ../../bin/index.js init -n ${validName}`, { cwd: tempDir });
-
-        const packageJsonPath = path.join(tempDir, 'package.json');
-        const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-        const packageJson = JSON.parse(packageJsonContent);
-
-        expect(packageJson.name).toBe(validName);
+        verifyPackageName(validName);
     });
 
     test('valid template name: URL friendly characters', async () => {
         const validName = 'valid-name';
         await exec(`node ../../bin/index.js init -n ${validName}`, { cwd: tempDir });
-
-        const packageJsonPath = path.join(tempDir, 'package.json');
-        const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-        const packageJson = JSON.parse(packageJsonContent);
-
-        expect(packageJson.name).toBe(validName);
+        verifyPackageName(validName);
     });
 });
