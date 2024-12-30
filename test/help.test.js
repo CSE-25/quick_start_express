@@ -1,5 +1,6 @@
-const util = require('node:util');
-const exec = util.promisify(require('node:child_process').exec);
+import { exec as execCallback } from 'child_process';
+import { promisify } from 'util';
+const exec = promisify(execCallback);
 
 const help = `Usage: qse [options] [command]
 

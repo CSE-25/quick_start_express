@@ -1,6 +1,7 @@
-const util = require('node:util');
-const exec = util.promisify(require('node:child_process').exec);
-const packageJson = require('../package.json')
+import packageJson from '../package.json';
+import { exec as execCallback } from 'child_process';
+import { promisify } from 'util';
+const exec = promisify(execCallback);
 
 describe('Version Command', () => {
     test('package.json has version', () => {

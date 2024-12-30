@@ -88,7 +88,7 @@ program
     }
   });
 
-function initCommand(options) {
+async function initCommand(options) {
   const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
   const packageName = options.name || "quick-start-express-server"; // Default to 'quick-start-express-server' if no name is specified
 
@@ -127,7 +127,7 @@ function initCommand(options) {
 
   const copySpinner = createSpinner("Creating server files...").start();
   try {
-    fs.copySync(templatePath, destinationPath);
+    await fs.copy(templatePath, destinationPath);
 
     copySpinner.success({ text: "Created server files successfully." });
   } catch (err) {
