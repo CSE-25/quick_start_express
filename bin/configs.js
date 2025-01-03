@@ -24,6 +24,10 @@ export const commands = {
         flags: "-n, --name <name>",
         description: "Specify the name of the package",
       },
+      {
+        flags: "--remove-nodemon",
+        description: "Disable hot-reload support using nodemon",
+      },
     ],
   },
   list: {

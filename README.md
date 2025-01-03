@@ -38,7 +38,7 @@ qse list
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/3a384836-df75-4db2-a3ff-044e2e102790" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/2057d8ca-234c-4f43-9449-0a3158bd4f09" width="800px"/>
 </div>
 
 ## Init
@@ -52,7 +52,19 @@ qse init
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/7e246ad7-add4-479a-9970-e3d79e8480ac" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/84e2fc79-9b88-4817-baf4-56845d5ee756" width="800px"/>
+</div>
+
+<br>Initialize without nodemon.<br>
+
+```bash
+qse init --remove-nodemon
+```
+
+### Output
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/279b2de6-4360-4399-aa98-cd9d17ca330f" width="800px"/>
 </div>
 
 ## Clear

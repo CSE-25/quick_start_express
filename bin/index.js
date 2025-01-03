@@ -25,6 +25,7 @@ program
   .description(commands.init.description)
   .option(commands.init.options[0].flags, commands.init.options[0].description)
   .option(commands.init.options[1].flags, commands.init.options[1].description)
+  .option(commands.init.options[2].flags, commands.init.options[2].description)
   .action((options) => {
     toolIntro();
     initCommand(options);
@@ -92,17 +93,20 @@ program
 async function initCommand(options) {
   const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
   const packageName = options.name || "quick-start-express-server"; // Default to 'quick-start-express-server' if no name is specified
+  const removeNodemon = options.removeNodemon;
 
   if (packageName) {
     const validateResult = validate(packageName);
     if (validateResult.validForNewPackages === false) {
-        const errors = validateResult.errors || validateResult.warnings;
-        console.error(
+      const errors = validateResult.errors || validateResult.warnings;
+      console.error(
         chalk.red.bold(
-            `Invalid package name: ${errors.join(", ")}. Please provide a valid package name.`
+          `Invalid package name: ${errors.join(
+            ", "
+          )}. Please provide a valid package name.`
         )
-        );
-        return;
+      );
+      return;
     }
   }
 
@@ -122,7 +126,11 @@ async function initCommand(options) {
   console.log("Starting server initialization...");
 
   const targetDir = process.cwd();
-  const templatePath = path.join(parentDir, "templates", templates[selectedTemplate].name);
+  const templatePath = path.join(
+    parentDir,
+    "templates",
+    templates[selectedTemplate].name
+  );
 
   const destinationPath = path.join(targetDir);
 
@@ -131,6 +139,35 @@ async function initCommand(options) {
     await fs.copy(templatePath, destinationPath);
 
     copySpinner.success({ text: "Created server files successfully." });
+
+    if (removeNodemon) {
+      const nodemonSpinner = createSpinner("Removing nodemon...").start();
+      try {
+        const packageJsonPath = path.join(destinationPath, "package.json");
+        const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
+        const packageJson = JSON.parse(packageJsonContent);
+
+        if (
+          packageJson.devDependencies &&
+          packageJson.devDependencies.nodemon
+        ) {
+          delete packageJson.devDependencies.nodemon;
+          if (!Object.keys(packageJson.devDependencies).length) {
+            delete packageJson.devDependencies;
+          }
+        }
+        if (packageJson.scripts && packageJson.scripts.dev) {
+          delete packageJson.scripts.dev;
+        }
+
+        fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+        nodemonSpinner.success({ text: "Removed nodemon successfully." });
+      } catch (err) {
+        nodemonSpinner.error({ text: "Error removing nodemon.\n" });
+        console.error(err.message);
+      }
+    }
   } catch (err) {
     copySpinner.error({ text: "Error creating server files.\n" });
     console.error(err.message);
@@ -171,6 +208,12 @@ async function initCommand(options) {
 
   console.log(chalk.green.bold("\nSetup complete! To run your server:"));
   console.log(chalk.yellow("Run:"), chalk.white.bold("npm start"));
+  if (!removeNodemon) {
+    console.log(
+      chalk.yellow("Run with hot reloading:"),
+      chalk.white.bold("npm run dev")
+    );
+  }
 }
 
 const toolIntro = () => {
