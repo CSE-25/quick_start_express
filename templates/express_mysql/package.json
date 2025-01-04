@@ -4,7 +4,8 @@
   "description": "Backend template for Express.js server with MySQL db.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "quick_start_express",
   "license": "ISC",
@@ -14,6 +15,9 @@
     "fs": "^0.0.1-security",
     "helmet": "^8.0.0",
     "mysql2": "^3.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   },
   "type": "module"
 }
