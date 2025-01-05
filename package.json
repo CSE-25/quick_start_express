@@ -5,8 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node bin/index.js init",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "dev": "node bin/index.js"
   },
   "author": "Abhinav Ramakrishnan, Ashwin Narayanan S",
   "license": "GPL-3.0-only",
