@@ -1,5 +1,5 @@
 {
-  "name": "qse",
+  "name": "quick_start_express",
   "version": "1.0.6-beta",
   "description": "A simple CLI tool to generate Express servers from multiple available templates.",
   "type": "module",
@@ -11,9 +11,16 @@
   "author": "Abhinav Ramakrishnan, Ashwin Narayanan S",
   "license": "GPL-3.0-only",
   "bin": {
-    "qse": "./bin/index.js",
-    "quick_start_express": "./bin/index.js"
+    "qse": "bin/index.js",
+    "quick_start_express": "bin/index.js"
   },
+  "files": [
+    "bin",
+    "templates",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
