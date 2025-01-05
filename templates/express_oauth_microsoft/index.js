@@ -1,6 +1,6 @@
 import { configDotenv } from 'dotenv'
-// configDotenv({ path: "./templates/express_oauth_microsoft/.env" }) // Use when testing the tool
-configDotenv({ path: "./.env" }) // use when testing the template
+// configDotenv({ path: "./templates/express_oauth_microsoft/.env" }) // Use when testing the tool.
+configDotenv({ path: "./.env" }) // Use when testing the template.
 
 import express from 'express'
 import passport from 'passport'
@@ -13,11 +13,11 @@ import { authRouter } from './router/authRouter.js'
 import { appRouter } from './router/appRouter.js'
 import { initLog } from './logs/logsInit.js'
 
-// for testing
+// For testing.
 // console.log(process.env.MICROSOFT_CLIENT_ID)
 // console.log(process.env.MICROSOFT_CLIENT_SECRET)
 
-// microsoft auth middleware
+// Microsoft auth middleware.
 passport.use(new MicrosoftStrategy({
     callbackURL: process.env.MICROSOFT_CALLBACK_URL || `http://localhost:3000/auth/microsoft/redirect`,
     clientID: process.env.MICROSOFT_CLIENT_ID,
@@ -29,7 +29,7 @@ passport.use(new MicrosoftStrategy({
         try {
             const email = profile.emails?.[0]?.value || 'No email available'
             const name = profile.displayName || 'No name available'
-            // const token = jwt.sign({ email, name }, process.env.JWT_SECRET, { expiresIn: '1h' }) // generating token
+            // const token = jwt.sign({ email, name }, process.env.JWT_SECRET, { expiresIn: '1h' }) // Generating token.
             return done(null, { email, name })
         } catch (error) {
             return done(error)

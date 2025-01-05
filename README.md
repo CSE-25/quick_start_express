@@ -35,7 +35,7 @@ qse --version
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/2dc11693-d0e0-4900-a5fb-876c87806570" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/146014fb-db6d-4a6c-be26-275cdb72d98c" width="800px"/>
 </div>
 
 ## List
@@ -49,7 +49,7 @@ qse list
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/2057d8ca-234c-4f43-9449-0a3158bd4f09" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/00cfa0d6-462d-43ee-9389-aebf5cd286d2" width="800px"/>
 </div>
 
 ## Init
@@ -112,6 +112,19 @@ Follow the guidelines in [CONTRIBUTING.md](https://github.com/CSE-25/quick_start
 - [Adripo](https://github.com/adripo)
 - [Akshay K S](https://github.com/akshayks13)
 - [K Venkatesh](https://github.com/venkatesh21bit)
+- [Phuong Thuy Nguyen](https://github.com/irisgranger)
+- [Abhinav Bansal](https://github.com/Abhinav-Bansal751)
+- [Guilherme Almeida Lopes](https://github.com/alguiguilo098)
+- [Nitansh Shankar](https://github.com/BIJJUDAMA)
+
+## Contributors
+
+- [Harish G M](https://github.com/GMHarish285)
+- [Kiran Rajeev](https://github.com/KiranRajeev-KV)
+- [Adripo](https://github.com/adripo)
+- [Akshay K S](https://github.com/akshayks13)
+- [K Venkatesh](https://github.com/venkatesh21bit)
+- [Vaibav](https://github.com/vaibav03)
 - [Phuong Thuy Nguyen](https://github.com/irisgranger)
 - [Abhinav Bansal](https://github.com/Abhinav-Bansal751)
 - [Guilherme Almeida Lopes](https://github.com/alguiguilo098)

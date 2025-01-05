@@ -17,8 +17,8 @@ const checkLogin = (req, res) => {
 const handleAuth = (req, res) => {
     if (req.user) {
         const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: '1h' })
-        res.cookie('token', token, { httpOnly: true }) // use in development
-        // res.cookie('token', token, { httpOnly: true, secure: true }) // use in production
+        res.cookie('token', token, { httpOnly: true }) // Use in development.
+        // res.cookie('token', token, { httpOnly: true, secure: true }) // Use in production.
         return res.redirect('/')
     } else {
         errorHandlerFunc(err, 'controller/authController', 401, 'Authentication failed')

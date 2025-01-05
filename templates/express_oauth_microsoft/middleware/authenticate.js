@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import { errorHandlerFunc } from '../errorHandler/errorHandler.js'
 
-// cookie token authetication
+// Cookie token authentication.
 const authenticateUser = (req, res, next) => {
     const token = req.cookies?.token
     if (!token) {

@@ -6,13 +6,13 @@ import { errorHandlerWrapper } from '../errorHandler/errorHandler.js'
 
 const router = express.Router()
 
-// token is verified if exists otherwise redirects to microsoft auth
+// Token is verified if exists otherwise redirects to microsoft auth.
 router.get('/login', errorHandlerWrapper(checkLogin, 'controller/authController'))
 
-// microsoft auth occurs here by calling microsoft strategy middleware
+// Microsoft auth occurs here by calling microsoft strategy middleware.
 router.get('/microsoft/redirect', passport.authenticate('microsoft', { session: false }), errorHandlerWrapper(handleAuth, 'controller/authController'))
 
-// handles logout
+// Handles logout.
 router.get('/logout', errorHandlerWrapper(logout, 'controller/authController'))
 
 export { router as authRouter }

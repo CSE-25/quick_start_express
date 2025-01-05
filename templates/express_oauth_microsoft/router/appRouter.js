@@ -6,7 +6,7 @@ import { errorHandlerWrapper } from '../errorHandler/errorHandler.js'
 
 const router = express.Router()
 
-// home page where user info is displayed
+// Home page where user info is displayed.
 router.get('/', authenticateUser, errorHandlerWrapper(getUserHomePage, 'controller/appController'))
 
 export { router as appRouter }

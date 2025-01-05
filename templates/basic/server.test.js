@@ -1,5 +1,5 @@
-import app from "./server.js";
 import request from "supertest";
+import app from "./server";
 
 describe("API Endpoints", () => {
   it("should return Hello World on GET /", async () => {
