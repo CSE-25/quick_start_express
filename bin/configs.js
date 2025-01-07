@@ -92,4 +92,45 @@ export const templates = {
       },
     ],
   },
+  express_ts_basic: {
+    name: "express_ts_basic",
+    dependencies: [
+      {
+        name: "express",
+        version: "^4.19.1",
+      },
+      {
+        name: "cors",
+        version: "^2.8.5",
+      },
+      {
+        name: "helmet",
+        version: "^7.1.0",
+      },
+      {
+        name: "@types/express",
+        version: "^4.17.21",
+      },
+      {
+        name: "@types/cors",
+        version: "^2.8.17",
+      },
+      {
+        name: "@types/node",
+        version: "^20.11.30",
+      },
+      {
+        name: "typescript",
+        version: "^5.4.2",
+      },
+      {
+        name: "ts-node",
+        version: "^10.9.2",
+      },
+      {
+        name: "nodemon",
+        version: "^3.1.0",
+      },
+    ],
+  },
 };
