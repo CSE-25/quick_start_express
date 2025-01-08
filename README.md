@@ -42,6 +42,13 @@ qse list
    <img src="https://github.com/user-attachments/assets/6f36f0e1-c714-4728-bd81-844b8104fe43" width="800px"/>
 </div>
 
+### Output 
+
+<div align="center">
+   <img src="![image](https://github.com/user-attachments/assets/d8832389-5fba-4be8-bc14-c29d32fee878)
+" width="800px"/>
+</div>
+
 ## Init
 
 ### Initialize a new Express.js server.
@@ -210,3 +217,4 @@ npm test
 - [Abhinav Bansal](https://github.com/Abhinav-Bansal751)
 - [Guilherme Almeida Lopes](https://github.com/alguiguilo098)
 - [Nitansh Shankar](https://github.com/BIJJUDAMA)
+- [Priyansh Narang](https://github.com/priyansh-narang2308)
