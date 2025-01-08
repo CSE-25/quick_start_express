@@ -12,6 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "express_mysql": "file:",
     "fs": "^0.0.1-security",
     "helmet": "^8.0.0",
     "mysql2": "^3.11.3"

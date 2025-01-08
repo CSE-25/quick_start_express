@@ -13,6 +13,7 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express_oauth_microsoft": "file:",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
