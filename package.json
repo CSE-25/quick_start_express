@@ -19,6 +19,7 @@
     "figlet": "^1.7.0",
     "fs-extra": "^11.2.0",
     "nanospinner": "^1.1.0",
+    "pg": "^8.13.1",
     "qse": "file:",
     "validate-npm-package-name": "^6.0.0"
   },
