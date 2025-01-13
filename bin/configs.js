@@ -63,6 +63,9 @@ export const templates = {
   express_pg_prisma: {
     name: "express_pg_prisma",
   },
+  express_mongo: {
+    name: "express_mongo",
+  },
   express_oauth_microsoft: {
     name: "express_oauth_microsoft",
   },
