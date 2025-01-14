@@ -22,7 +22,7 @@ export async function getAllSamples(_, res) {
         console.error(errMessage);
         appendFileSync(
             "./logs/controller/sampleController.log",
-            `${errMessage}\n`
+            `${errMessage}\n`,
         );
 
         return res.status(500).send({

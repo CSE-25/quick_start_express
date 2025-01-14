@@ -4,8 +4,9 @@
 [![build status](https://img.shields.io/github/actions/workflow/status/CSE-25/quick_start_express/runJestTests.yml)](https://github.com/CSE-25/quick_start_express)
 
 # Quick Start Express
- <a href="https://cse-25.github.io/quick_start_express/"> <img src="https://img.shields.io/badge/Explore%20Docs-Quick%20Start%20Express-blueviolet?style=for-the-badge&logo=rocket" alt="Quick Start Express Documentation"/> </a>
- 
+
+<a href="https://cse-25.github.io/quick_start_express/"> <img src="https://img.shields.io/badge/Explore%20Docs-Quick%20Start%20Express-blueviolet?style=for-the-badge&logo=rocket" alt="Quick Start Express Documentation"/> </a>
+
 A simple CLI tool to generate Express servers from multiple available templates. [View on NPM](https://www.npmjs.com/package/quick_start_express)
 
 # Commands
@@ -68,7 +69,6 @@ qse init --remove-nodemon
    <img src="https://github.com/user-attachments/assets/279b2de6-4360-4399-aa98-cd9d17ca330f" width="800px"/>
 </div>
 
-
 ### Initialize without installation of dependencies.
 
 Initialize a new Express.js server without installing dependencies.
@@ -76,7 +76,6 @@ Initialize a new Express.js server without installing dependencies.
 ```bash
 qse init --remove-deps
 ```
-
 
 ### Output
 
@@ -91,6 +90,7 @@ Set a custom name for your generated Express server application during initializ
 ```bash
 qse init -t basic -n app_name
 ```
+
 ### Output
 
 <div align="center">
@@ -134,19 +134,19 @@ Follow the guidelines in [CONTRIBUTING.md](https://github.com/CSE-25/quick_start
 1. Download and install Node.js from [https://nodejs.org/](https://nodejs.org/)
 2. Verify the installation by running the following command in the terminal:
 
-   ```bash
-   node -v
-   ```
+    ```bash
+    node -v
+    ```
 
-   The version of Node.js should be displayed.
+    The version of Node.js should be displayed.
 
 ### Install node packages.
 
 1. Run the following command in the terminal to install the required `node` packages:
 
-   ```bash
-   npm i
-   ```
+    ```bash
+    npm i
+    ```
 
 ### Run the package.
 
@@ -154,32 +154,32 @@ To test the CLI tool locally, you need to link the package. Use a separate testi
 
 1. **Link the Package in the Main Directory**: In the `quick_start_express` root directory, run:
 
-   ```bash
-   npm link
-   ```
+    ```bash
+    npm link
+    ```
 
 2. **Create a Testing Directory**: In the `quick_start_express` root directory, create a `qse-test` directory:
 
-   ```bash
-   mkdir qse-test
-   cd qse-test
-   ```
+    ```bash
+    mkdir qse-test
+    cd qse-test
+    ```
 
 3. **Link `qse` in the Testing Directory**: In the testing directory, run:
 
-   ```bash
-   npm link qse
-   ```
-   
+    ```bash
+    npm link qse
+    ```
+
 4. **Run `qse` Commands**: Now, you can execute any `qse` commands in the testing directory, such as:
 
-   ```bash
-   qse init
-   qse clear
-   qse -v
-   ```
+    ```bash
+    qse init
+    qse clear
+    qse -v
+    ```
 
-> [!Note] 
+> [!Note]
 > Running `npm link qse` in the root directory may modify `package.json`. Always use a separate testing directory to avoid this.
 
 **Clean-Up**: After testing, you may delete the testing directory if it’s no longer needed.
@@ -191,6 +191,7 @@ To execute the tests, navigate to the root directory of the `quick_start_express
 ```bash
 npm test
 ```
+
 ## Core Contributors
 
 - [Abhinav Ramakrishnan](https://github.com/Abhinav-ark)

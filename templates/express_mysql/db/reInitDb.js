@@ -17,7 +17,7 @@ const reInitDb = (db) => {
 
                         if (err.message.includes("Unknown database")) {
                             console.warn(
-                                `[HINT]: Database '${appConfig.db.database}' does not exist. Please create it by running the following command in your MySQL shell: 'CREATE DATABASE ${appConfig.db.database}'.`
+                                `[HINT]: Database '${appConfig.db.database}' does not exist. Please create it by running the following command in your MySQL shell: 'CREATE DATABASE ${appConfig.db.database}'.`,
                             );
                         }
                     } else {

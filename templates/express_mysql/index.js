@@ -37,10 +37,10 @@ app.listen(appConfig.PORT, (err) => {
         appendFileSync("./logs/index.log", `${errMessage}\n`);
     } else {
         console.info(
-            `[INFO]: Server is running on http://127.0.0.1:${appConfig.PORT}.`
+            `[INFO]: Server is running on http://127.0.0.1:${appConfig.PORT}.`,
         );
         console.warn(
-            `[TEST]: Test the server by sending a GET request to http://127.0.0.1:${appConfig.PORT}${appConfig.router.SAMPLE_PREFIX}/test.`
+            `[TEST]: Test the server by sending a GET request to http://127.0.0.1:${appConfig.PORT}${appConfig.router.SAMPLE_PREFIX}/test.`,
         );
     }
 });

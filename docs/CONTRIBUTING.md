@@ -20,30 +20,34 @@ To contribute to this project, please follow the below guidelines:
     ```git
     git clone <your_forked_repo_clone_url>
     ```
+
 4. Create a branch in your forked repo with a relevant name.
 
     ```git
     git checkout -b <branch_name>
     ```
+
 5. Make the necessary changes and commit those changes.
 
     ```git
     git add .
     git commit -m "your_commit_message"
     ```
+
 6. Push changes to your forked repo.
 
     ```git
     git push origin <branch_name>
     ```
+
 7. Once you push the changes to your repo, the `Contribute` Button will appear in Github.
 8. Click that button and you will be taken to the PR page. Describe what changes you have made and submit the PR.
-    <ol type="a">  
-        <li>Mention the issue link in the PR description.</li>  
-        <li>If the PR is still a work in progress, start the title with "[WIP]".</li>  
-        <li>If the PR is complete, start the title with "[COMPLETED]".</li>  
-        <li>Add "@Abhinav-ark" or "@Ashrockzzz2003" as reviewers.</li>  
-    </ol> 
+ <ol type="a">  
+     <li>Mention the issue link in the PR description.</li>  
+     <li>If the PR is still a work in progress, start the title with "[WIP]".</li>  
+     <li>If the PR is complete, start the title with "[COMPLETED]".</li>  
+     <li>Add "@Abhinav-ark" or "@Ashrockzzz2003" as reviewers.</li>  
+ </ol>
 9. Wait for the PR to be reviewed by the maintainers.
 10. Make the required changes if the maintainers ask for them.
 11. Once the maintainers approve the PR, the PR will be merged.

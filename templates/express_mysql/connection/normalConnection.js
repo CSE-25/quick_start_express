@@ -13,7 +13,7 @@ const connectToDb = () => {
         console.error(errMessage);
         appendFileSync(
             "./logs/connection/normalConnection.log",
-            `${errMessage}\n`
+            `${errMessage}\n`,
         );
     }
 };

@@ -1,22 +1,22 @@
 {
-  "name": "basic",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
-  "type": "module",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9",
-    "jest": "^29.7.0",
-    "supertest": "^7.0.0"
-  }
+    "name": "basic",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "type": "module",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9",
+        "jest": "^29.7.0",
+        "supertest": "^7.0.0"
+    }
 }

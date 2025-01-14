@@ -1,20 +1,25 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-import { errorHandlerFunc } from '../errorHandler/errorHandler.js'
+import { errorHandlerFunc } from "../errorHandler/errorHandler.js";
 
 // Cookie token authentication.
 const authenticateUser = (req, res, next) => {
-    const token = req.cookies?.token
+    const token = req.cookies?.token;
     if (!token) {
-        return res.redirect('/auth/login')
+        return res.redirect("/auth/login");
     }
     try {
-        const user = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = user
-        next()
+        const user = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = user;
+        next();
     } catch (err) {
-        errorHandlerFunc(err, 'middleware/authenticate.log', 401, "Authentication failed.")
+        errorHandlerFunc(
+            err,
+            "middleware/authenticate.log",
+            401,
+            "Authentication failed.",
+        );
     }
-}
+};
 
-export { authenticateUser }
+export { authenticateUser };

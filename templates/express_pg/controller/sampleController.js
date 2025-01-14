@@ -25,7 +25,7 @@ async function getAllSamples(req, res) {
         console.error(errMessage);
         appendFileSync(
             "./logs/controller/sampleController.log",
-            `${errMessage}\n`
+            `${errMessage}\n`,
         );
 
         return res.status(500).send({

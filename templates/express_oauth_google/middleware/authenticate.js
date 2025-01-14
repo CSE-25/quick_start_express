@@ -1,12 +1,12 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-import { errorHandlerFunc } from '../errorHandler/errorHandler.js'
+import { errorHandlerFunc } from "../errorHandler/errorHandler.js";
 
 // Cookie token authentication.
 const authenticateUser = (req, res, next) => {
     const token = req.cookies?.token;
     if (!token) {
-        return res.redirect('/auth/login');
+        return res.redirect("/auth/login");
     }
 
     try {
@@ -15,22 +15,35 @@ const authenticateUser = (req, res, next) => {
         next();
     } catch (err) {
         // Renew token if it gets expired.
-        if (err.name === 'TokenExpiredError') {
+        if (err.name === "TokenExpiredError") {
             try {
                 const user = jwt.decode(token);
-                const newToken = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '1h' });
-                res.cookie('token', newToken, { httpOnly: true });
+                const newToken = jwt.sign(user, process.env.JWT_SECRET, {
+                    expiresIn: "1h",
+                });
+                res.cookie("token", newToken, { httpOnly: true });
                 req.user = user;
                 return next();
             } catch (decodeErr) {
                 console.error(`[ERROR]: ${decodeErr.message}`);
-                errorHandlerFunc(err, res, 'middleware/authenticate.log', 401, 'Authentication failed');
-                return res.redirect('/auth/login');
+                errorHandlerFunc(
+                    err,
+                    res,
+                    "middleware/authenticate.log",
+                    401,
+                    "Authentication failed",
+                );
+                return res.redirect("/auth/login");
             }
         }
-        errorHandlerFunc(err, res, 'middleware/authenticate.log', 401, 'Authentication failed');
+        errorHandlerFunc(
+            err,
+            res,
+            "middleware/authenticate.log",
+            401,
+            "Authentication failed",
+        );
     }
 };
-
 
 export { authenticateUser };
