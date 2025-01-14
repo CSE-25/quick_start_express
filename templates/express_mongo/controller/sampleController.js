@@ -11,7 +11,7 @@ async function test(req, res) {
 
 async function getAllSamples(req, res) {
     try {
-        const sampleModel = db.model('Sample', sampleSchema)
+        const sampleModel = db.model("Sample", sampleSchema);
         const data = await sampleModel.find({});
         return res.status(200).send({
             MESSAGE: "Data fetched successfully.",

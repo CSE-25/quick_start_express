@@ -1,13 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-import { appConfig } from '../config/appConfig.js';
+import { appConfig } from "../config/appConfig.js";
 
-let db = null
+let db = null;
 
 try {
-    const options = appConfig.db.options
-    const connUrl = `mongodb://${options.host}:${options.port}/${options.dbname}`
-    db = await mongoose.createConnection(connUrl, {user: options.user, pass: options.pass}).asPromise()
+    const options = appConfig.db.options;
+    const connUrl = `mongodb://${options.host}:${options.port}/${options.dbname}`;
+    db = await mongoose
+        .createConnection(connUrl, { user: options.user, pass: options.pass })
+        .asPromise();
 } catch (err) {
     const timeStamp = new Date().toLocaleString();
     const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
@@ -15,11 +17,11 @@ try {
     appendFileSync("./logs/connection/connection.log", `${errMessage}\n`);
 }
 
-db.on('error', (err) => {
+db.on("error", (err) => {
     const timeStamp = new Date().toLocaleString();
     const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
     console.error(errMessage);
     appendFileSync("./logs/connection/connection.log", `${errMessage}\n`);
 });
 
-export { db }
+export { db };

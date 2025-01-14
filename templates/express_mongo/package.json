@@ -1,22 +1,22 @@
 {
-  "name": "express_mongo",
-  "version": "1.0.0",
-  "description": "Backend template for Express.js server with Mongo db.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
-  "author": "quick_start_express",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.4.7",
-    "express": "^4.21.1",
-    "fs": "^0.0.1-security",
-    "mongoose": "^8.9.4"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-  },
-  "type": "module"
+    "name": "express_mongo",
+    "version": "1.0.0",
+    "description": "Backend template for Express.js server with Mongo db.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "author": "quick_start_express",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.1",
+        "fs": "^0.0.1-security",
+        "mongoose": "^8.9.4"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    },
+    "type": "module"
 }
