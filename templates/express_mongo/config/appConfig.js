@@ -1,7 +1,7 @@
 const CONCURRENCY_LIMIT = 4;
 
 const appConfig = {
-    PORT: 3000,
+    PORT: process.env.SERVER_PORT || 8080,
     db: {
         options: {
             host: process.env.DB_HOST || "127.0.0.1",
