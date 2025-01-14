@@ -1,10 +1,22 @@
 import mongoose from "mongoose";
 
-const sampleSchema = new mongoose.Schema({
+const sampleSchema1 = new mongoose.Schema({
     name: {
         type: String,
         required: true,
     },
 });
 
-export { sampleSchema };
+const sampleSchema2 = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        reqired: true,
+        min: 0,
+    },
+});
+
+export { sampleSchema1, sampleSchema2 };

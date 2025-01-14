@@ -1,4 +1,6 @@
-const CONCURRENCY_LIMIT = 4;
+import os from "os";
+
+const CONCURRENCY_LIMIT = os.availableParallelism();
 
 const appConfig = {
     PORT: process.env.SERVER_PORT || 8080,
