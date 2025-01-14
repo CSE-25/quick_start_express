@@ -17,9 +17,9 @@ Available Templates:
 - basic_ts
 - express_pg
 - express_pg_sequelize
+- express_mongo
 - express_mysql
 - express_pg_prisma
-- express_mongo
 - express_oauth_microsoft
 - express_oauth_google\n`;
 
