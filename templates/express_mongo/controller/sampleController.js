@@ -1,7 +1,6 @@
 import { appendFileSync } from "fs";
 
 import { db } from "../connection/connection.js";
-import { sampleSchema1, sampleSchema2 } from "../schema/sampleSchema.js";
 
 async function test(req, res) {
     return res.status(200).send({
@@ -11,8 +10,8 @@ async function test(req, res) {
 
 async function getSample1(req, res) {
     try {
-        const sampleModel = db.model("Sample1", sampleSchema1);
-        const data = await sampleModel.find({});
+        const sample1Collection = db.collection("sample1");
+        const data = await sample1Collection.find().toArray();
         return res.status(200).send({
             MESSAGE: "Data fetched successfully.",
             DATA: data,
@@ -21,7 +20,7 @@ async function getSample1(req, res) {
         const timeStamp = new Date().toLocaleString();
         const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
         console.error(errMessage);
-        appendFileSync("./logs/controler/controller.log", `${errMessage}\n`);
+        appendFileSync("./logs/controller/controller.log", `${errMessage}\n`);
 
         return res.status(500).send({
             MESSAGE: "Something went wrong. Please try again later.",
@@ -31,8 +30,8 @@ async function getSample1(req, res) {
 
 async function getSample2(req, res) {
     try {
-        const sampleModel = db.model("Sample2", sampleSchema2);
-        const data = await sampleModel.find({});
+        const sample2Collection = db.collection("sample2");
+        const data = await sample2Collection.find().toArray();
         return res.status(200).send({
             MESSAGE: "Data fetched successfully.",
             DATA: data,
@@ -41,7 +40,7 @@ async function getSample2(req, res) {
         const timeStamp = new Date().toLocaleString();
         const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
         console.error(errMessage);
-        appendFileSync("./logs/controler/controller.log", `${errMessage}\n`);
+        appendFileSync("./logs/controller/controller.log", `${errMessage}\n`);
 
         return res.status(500).send({
             MESSAGE: "Something went wrong. Please try again later.",

@@ -1,27 +1,21 @@
-import mongoose from "mongoose";
+import { MongoClient } from "mongodb";
+import { appendFileSync } from "fs";
 
 import { appConfig } from "../config/appConfig.js";
 
+let client = null;
 let db = null;
 
 try {
     const options = appConfig.db.options;
-    const connUrl = `mongodb://${options.host}:${options.port}/${options.dbname}`;
-    db = await mongoose
-        .createConnection(connUrl, { user: options.user, pass: options.pass })
-        .asPromise();
+    const connUrl = `mongodb://${options.user ? `${options.user}:${options.pass}@` : ""}${options.host}:${options.port}`;
+    client = new MongoClient(connUrl, { maxPoolSize: options.maxPoolSize });
+    db = client.db(options.dbname);
 } catch (err) {
     const timeStamp = new Date().toLocaleString();
     const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
     console.error(errMessage);
     appendFileSync("./logs/connection/connection.log", `${errMessage}\n`);
 }
-
-db.on("error", (err) => {
-    const timeStamp = new Date().toLocaleString();
-    const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
-    console.error(errMessage);
-    appendFileSync("./logs/connection/connection.log", `${errMessage}\n`);
-});
 
 export { db };
