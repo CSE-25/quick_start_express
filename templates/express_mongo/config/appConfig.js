@@ -5,12 +5,9 @@ const CONCURRENCY_LIMIT = os.availableParallelism();
 const appConfig = {
     PORT: process.env.SERVER_PORT || 8080,
     db: {
+        connUrl: process.env.DB_CONN_URL || "mongodb://127.0.0.1:27017",
+        dbname: process.env.DB_NAME || "test",
         options: {
-            host: process.env.DB_HOST || "127.0.0.1",
-            port: process.env.DB_PORT || 27017,
-            dbname: process.env.DB_NAME || "test",
-            user: process.env.DB_USER || "",
-            pass: process.env.DB_PASSWORD || "",
             maxPoolSize: CONCURRENCY_LIMIT,
         },
     },

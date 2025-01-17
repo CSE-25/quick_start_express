@@ -7,10 +7,8 @@ let client = null;
 let db = null;
 
 try {
-    const options = appConfig.db.options;
-    const connUrl = `mongodb://${options.user ? `${options.user}:${options.pass}@` : ""}${options.host}:${options.port}`;
-    client = new MongoClient(connUrl, { maxPoolSize: options.maxPoolSize });
-    db = client.db(options.dbname);
+    client = new MongoClient(appConfig.db.connUrl, { ...appConfig.db.options });
+    db = client.db(appConfig.db.dbname);
 } catch (err) {
     const timeStamp = new Date().toLocaleString();
     const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
