@@ -438,7 +438,7 @@ describe("init with custom template name without installing deps", () => {
         );
     });
 
-    test("invalid template name: contains non URL friendly charcters", async () => {
+    test("invalid template name: contains non URL friendly characters", async () => {
         const { stderr } = await exec(
             `node ../../bin/index.js init -n "#invalid name%" --remove-deps`,
             { cwd: tempDir },
