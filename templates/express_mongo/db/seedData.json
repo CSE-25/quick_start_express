@@ -1,0 +1,24 @@
+{
+    "sample1Collection": [
+        {
+            "name": "sample11"
+        },
+        {
+            "name": "sample12"
+        }
+    ],
+    "sample2Collection": [
+        {
+            "name": "sample21",
+            "price": 1000
+        },
+        {
+            "name": "sample22",
+            "price": 199
+        },
+        {
+            "name": "sample23",
+            "price": 31
+        }
+    ]
+}

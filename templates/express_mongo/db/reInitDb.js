@@ -9,14 +9,11 @@ const reInitDb = async (db) => {
         await sample1Collection.drop();
         await sample2Collection.drop();
 
-        const data1 = JSON.parse(
-            await promises.readFile("./db/seedSample1.json", "utf-8"),
+        const data = JSON.parse(
+            await promises.readFile("./db/seedData.json", "utf-8"),
         );
-        await sample1Collection.insertMany(data1);
-        const data2 = JSON.parse(
-            await promises.readFile("./db/seedSample2.json", "utf-8"),
-        );
-        await sample2Collection.insertMany(data2);
+        await sample1Collection.insertMany(data.sample1Collection);
+        await sample2Collection.insertMany(data.sample2Collection);
     } catch (err) {
         const timeStamp = new Date().toLocaleString();
         const errMessage = `[ERROR]: ${timeStamp} - reInitDb - ${err.message}`;
