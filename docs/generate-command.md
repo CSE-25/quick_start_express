@@ -59,7 +59,9 @@ export default {
 # Generate Command
 
 ## Select a template
+
 Select a template. If a template is not provided, by default, the basic template is installed.
+
 <div>
     <div v-for="(val, key) in templates">
         <input type="radio" :id="key" :value="key" v-model="selectedTemplate">
@@ -68,28 +70,36 @@ Select a template. If a template is not provided, by default, the basic template
 </div>
 
 ## Exclude nodemon
+
 By default, nodemon is added as a dev dependency. Add this flag if you do not want hot reloading with nodemon.
+
 <div>
     <input type="checkbox" id="remove-nodemon" v-model="removeNodemon">
     <label for="remove-nodemon">Remove nodemon</label>
 </div>
 
 ## Exclude dependencies
+
 By default, all dependencies are installed along with your package. Add this flag if you do not want to install the dependencies.
+
 <div>
     <input type="checkbox" id="remove-deps" v-model="removeDeps">
     <label for="remove-deps">Remove dependencies</label>
 </div>
 
 ## Package name
+
 Provide a package name. By default, the template name becomes the package name.
+
 <div>
     <input type="text" id="package-name" v-model="packageName" placeholder="Package Name">
     <p class="error-message" v-if="validatePackageName()">{{validatePackageName()}}</p>
 </div>
 
 ## Command
+
 Once you have made your selections, copy this command and paste it in your terminal at the directory where you want the project to be created.
+
 ```shell-vue
 {{generateCommand()}}
 ```
