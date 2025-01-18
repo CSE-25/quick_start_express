@@ -1,26 +1,25 @@
 {
-  "name": "express_oauth_google",
-  "version": "1.0.0",
-  "description": "Backend template for Express.js with Google OAuth authentication",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
-  "author": "quick_start_express",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^1.7.9",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express_oauth_google": "file:",
-    "fs": "^0.0.1-security",
-    "googleapis": "^144.0.0",
-    "jsonwebtoken": "^9.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-  },
-  "type": "module"
+    "name": "express_oauth_google",
+    "version": "1.0.0",
+    "description": "Backend template for Express.js with Google OAuth authentication",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "author": "quick_start_express",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.7.9",
+        "cookie-parser": "^1.4.7",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "fs": "^0.0.1-security",
+        "googleapis": "^144.0.0",
+        "jsonwebtoken": "^9.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    },
+    "type": "module"
 }

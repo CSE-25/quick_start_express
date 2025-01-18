@@ -1,9 +1,11 @@
 [![npm latest published version](https://img.shields.io/npm/v/quick_start_express)](https://www.npmjs.com/package/quick_start_express)
 [![npm downloads last 18 months](https://img.shields.io/npm/d18m/quick_start_express)](https://www.npmjs.com/package/quick_start_express)
 [![npm last updated](https://img.shields.io/npm/last-update/quick_start_express)](https://www.npmjs.com/package/quick_start_express)
-[![build status](https://img.shields.io/github/actions/workflow/status/CSE-25/quick_start_express/runJestTests.yml)](https://github.com/CSE-25/quick_start_express)
+[![build status](https://img.shields.io/github/actions/workflow/status/CSE-25/quick_start_express/runTests.yml)](https://github.com/CSE-25/quick_start_express)
 
 # Quick Start Express
+
+<a href="https://cse-25.github.io/quick_start_express/"> <img src="https://img.shields.io/badge/Explore%20Docs-Quick%20Start%20Express-blueviolet?style=for-the-badge&logo=rocket" alt="Quick Start Express Documentation"/> </a>
 
 A simple CLI tool to generate Express servers from multiple available templates. [View on NPM](https://www.npmjs.com/package/quick_start_express)
 
@@ -24,7 +26,7 @@ qse --version
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/d2f187b2-ec24-4e09-8814-3ae928447af6" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/2677b4fe-8ed6-4015-afd9-6796aab8b613" width="800px"/>
 </div>
 
 ## List
@@ -38,18 +40,44 @@ qse list
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/22b633a1-91c2-4150-bd41-7ed77b70db9c" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/7ad29ff0-97ad-416a-9392-9992ad272a20" width="800px"/>
 </div>
 
 ## Init
 
 ### Initialize a new Express.js server.
 
+Run the below command after installing the tool in the directory in which you want the template to be created.
+
 ```bash
 qse init
 ```
 
-### Output
+Select a template
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/08f2cf16-0de5-456a-8fc3-00ca295ff142" width="800px"/>
+</div>
+
+Answer a few questions to customize your template
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/b0278466-022b-469b-83ef-5f692f2b1bd9" width="800px"/>
+</div>
+
+#### Output
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/d965b1c9-e872-4fda-8f6c-096e1891ca43" width="800px"/>
+</div>
+
+### Initialize an Express.js server template (directly with flags).
+
+```bash
+qse init -t template_name
+```
+
+#### Output
 
 <div align="center">
    <img src="https://github.com/user-attachments/assets/84e2fc79-9b88-4817-baf4-56845d5ee756" width="800px"/>
@@ -58,7 +86,7 @@ qse init
 ### Initialize without nodemon.
 
 ```bash
-qse init --remove-nodemon
+qse init -t template_name --remove-nodemon
 ```
 
 ### Output
@@ -67,20 +95,18 @@ qse init --remove-nodemon
    <img src="https://github.com/user-attachments/assets/279b2de6-4360-4399-aa98-cd9d17ca330f" width="800px"/>
 </div>
 
-
 ### Initialize without installation of dependencies.
 
 Initialize a new Express.js server without installing dependencies.
 
 ```bash
-qse init --remove-deps
+qse init template_name --remove-deps
 ```
-
 
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/6ad96031-ff06-469f-8ec0-319d812558fa" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/88619fba-ebcb-4a27-bc10-688f4edf1861" width="800px"/>
 </div>
 
 ### Customize the Generated Server App Name
@@ -90,6 +116,7 @@ Set a custom name for your generated Express server application during initializ
 ```bash
 qse init -t basic -n app_name
 ```
+
 ### Output
 
 <div align="center">
@@ -133,19 +160,19 @@ Follow the guidelines in [CONTRIBUTING.md](https://github.com/CSE-25/quick_start
 1. Download and install Node.js from [https://nodejs.org/](https://nodejs.org/)
 2. Verify the installation by running the following command in the terminal:
 
-   ```bash
-   node -v
-   ```
+    ```bash
+    node -v
+    ```
 
-   The version of Node.js should be displayed.
+    The version of Node.js should be displayed.
 
 ### Install node packages.
 
 1. Run the following command in the terminal to install the required `node` packages:
 
-   ```bash
-   npm i
-   ```
+    ```bash
+    npm i
+    ```
 
 ### Run the package.
 
@@ -153,32 +180,32 @@ To test the CLI tool locally, you need to link the package. Use a separate testi
 
 1. **Link the Package in the Main Directory**: In the `quick_start_express` root directory, run:
 
-   ```bash
-   npm link
-   ```
+    ```bash
+    npm link
+    ```
 
 2. **Create a Testing Directory**: In the `quick_start_express` root directory, create a `qse-test` directory:
 
-   ```bash
-   mkdir qse-test
-   cd qse-test
-   ```
+    ```bash
+    mkdir qse-test
+    cd qse-test
+    ```
 
 3. **Link `qse` in the Testing Directory**: In the testing directory, run:
 
-   ```bash
-   npm link qse
-   ```
-   
+    ```bash
+    npm link qse
+    ```
+
 4. **Run `qse` Commands**: Now, you can execute any `qse` commands in the testing directory, such as:
 
-   ```bash
-   qse init
-   qse clear
-   qse -v
-   ```
+    ```bash
+    qse init
+    qse clear
+    qse -v
+    ```
 
-> [!Note] 
+> [!Note]
 > Running `npm link qse` in the root directory may modify `package.json`. Always use a separate testing directory to avoid this.
 
 **Clean-Up**: After testing, you may delete the testing directory if it’s no longer needed.
@@ -190,6 +217,7 @@ To execute the tests, navigate to the root directory of the `quick_start_express
 ```bash
 npm test
 ```
+
 ## Core Contributors
 
 - [Abhinav Ramakrishnan](https://github.com/Abhinav-ark)

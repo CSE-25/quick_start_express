@@ -1,4 +1,4 @@
-import { appendFileSync } from 'fs';
+import { appendFileSync } from "fs";
 
 // Custom error handling function.
 const errorHandlerFunc = (err, res, filePath, statusCode, message) => {
@@ -8,20 +8,26 @@ const errorHandlerFunc = (err, res, filePath, statusCode, message) => {
     appendFileSync(`./logs/${filePath}`, `${errMessage}\n`);
 
     return res.status(statusCode).send({
-        "message": message,
-        "error": err.message
+        message: message,
+        error: err.message,
     });
-}
+};
 
 // Custom error handling wrapper for every middleware incase something goes wrong.
 const errorHandlerWrapper = (middleware, filePath) => {
     return (req, res, next) => {
         try {
-            middleware(req, res, next)
+            middleware(req, res, next);
         } catch (err) {
-            errorHandlerFunc(err, res, filePath, 500, 'Something went wrong. Please try again later.')
+            errorHandlerFunc(
+                err,
+                res,
+                filePath,
+                500,
+                "Something went wrong. Please try again later.",
+            );
         }
-    }
-}
+    };
+};
 
-export { errorHandlerWrapper, errorHandlerFunc }
+export { errorHandlerWrapper, errorHandlerFunc };

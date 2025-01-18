@@ -1,26 +1,25 @@
 {
-  "name": "basic_ts",
-  "version": "1.0.0",
-  "description": "Basic Express.js server in TypeScript",
-  "main": "dist/index",
-  "types": "dist/index",
-  "type": "module",
-  "scripts": {
-    "start": "tsx src/index",
-    "dev": "nodemon"
-  },
-  "author": "quick_start_express",
-  "license": "ISC",
-  "dependencies": {
-    "basic_ts": "file:",
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.13",
-    "@types/node": "^22.10.3",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
-  }
+    "name": "basic_ts",
+    "version": "1.0.0",
+    "description": "Basic Express.js server in TypeScript",
+    "main": "dist/index",
+    "types": "dist/index",
+    "type": "module",
+    "scripts": {
+        "start": "tsx src/index",
+        "dev": "nodemon"
+    },
+    "author": "quick_start_express",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^22.10.3",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.2",
+        "nodemon": "^3.1.9"
+    }
 }

@@ -1,0 +1,22 @@
+{
+    "name": "express_pg",
+    "version": "1.0.0",
+    "description": "Backend template for Express.js server with PostgreSQL db.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "author": "quick_start_express",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "fs": "^0.0.1-security",
+        "pg": "^8.13.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    },
+    "type": "module"
+}

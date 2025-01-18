@@ -1,5 +1,7 @@
 import { exec as execCallback } from "child_process";
 import { promisify } from "util";
+import { expect } from "@jest/globals";
+
 const exec = promisify(execCallback);
 
 const help = `Usage: qse [options] [command]
@@ -18,19 +20,19 @@ Commands:
   help [command]  display help for command\n`;
 
 describe("Help Command", () => {
-  test("help", async () => {
-    const { stdout, stderr } = await exec("node bin/index.js help");
-    expect(stdout).toEqual(help);
-    expect(stderr).toEqual("");
-  });
-  test("--help", async () => {
-    const { stdout, stderr } = await exec("node bin/index.js --help");
-    expect(stdout).toEqual(help);
-    expect(stderr).toEqual("");
-  });
-  test("-h", async () => {
-    const { stdout, stderr } = await exec("node bin/index.js -h");
-    expect(stdout).toEqual(help);
-    expect(stderr).toEqual("");
-  });
+    test("help", async () => {
+        const { stdout, stderr } = await exec("node bin/index.js help");
+        expect(stdout).toEqual(help);
+        expect(stderr).toEqual("");
+    });
+    test("--help", async () => {
+        const { stdout, stderr } = await exec("node bin/index.js --help");
+        expect(stdout).toEqual(help);
+        expect(stderr).toEqual("");
+    });
+    test("-h", async () => {
+        const { stdout, stderr } = await exec("node bin/index.js -h");
+        expect(stdout).toEqual(help);
+        expect(stderr).toEqual("");
+    });
 });
