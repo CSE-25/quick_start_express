@@ -90,6 +90,9 @@ export const templates = {
         serverPort: "8080:8080",
         dbDockerImage: "postgres:latest",
     },
+    express_mongo: {
+        name: "express_mongo",
+    },
     express_mysql: {
         name: "express_mysql",
         isUrl: false,

@@ -208,6 +208,20 @@ describe("normal init with default settings", () => {
         expect(nodeModulesExist()).toBe(true);
     }, 20000);
 
+    test("express_mongo with nodemon", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_mongo"),
+        );
+        await exec(`node ../../bin/index.js init -t express_mongo`, {
+            cwd: tempDir,
+        });
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+    }, 20000);
+
     test("express_oauth_google with nodemon", async () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "express_oauth_google"),
@@ -333,6 +347,23 @@ describe("init --remove-deps", () => {
         );
         await exec(
             `node ../../bin/index.js init -t express_pg_prisma --remove-deps`,
+            {
+                cwd: tempDir,
+            },
+        );
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+    }, 20000);
+
+    test("express_mongo with nodemon without deps installed", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_mongo"),
+        );
+        await exec(
+            `node ../../bin/index.js init -t express_mongo --remove-deps`,
             {
                 cwd: tempDir,
             },
@@ -553,6 +584,21 @@ describe("init without nodemon option without installing deps.", () => {
     test("express_pg_prisma without nodemon", async () => {
         await exec(
             "node ../../bin/index.js init -t express_pg_prisma --remove-nodemon --remove-deps",
+            { cwd: tempDir },
+        );
+        const packageJson = readPackageJson();
+
+        expect(packageJson.scripts.start).not.toContain("nodemon");
+        expect(packageJson.scripts.dev).toBeUndefined();
+
+        if (packageJson.devDependencies) {
+            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
+        }
+    }, 20000);
+
+    test("express_mongo without nodemon", async () => {
+        await exec(
+            "node ../../bin/index.js init -t express_mongo --remove-nodemon --remove-deps",
             { cwd: tempDir },
         );
         const packageJson = readPackageJson();
