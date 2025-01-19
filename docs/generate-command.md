@@ -44,7 +44,7 @@ export default {
 
             if (this.packageName.length > 214) {
                 err = "Package name must have less than or equal to 214 characters."
-            } else if (/[ #%]/.test(this.packageName)) {
+            } else if (/[^-._~0-9a-zA-Z]/.test(this.packageName)) {
                 err = "Package name must not contain non URL friendly characters (%, #, space)."
             } else if (/[A-Z]/.test(this.packageName)) {
                 err = "Package name must contain only lower case letters."
@@ -63,10 +63,12 @@ export default {
 Select a template. If a template is not provided, by default, the basic template is installed.
 
 <div>
-    <div v-for="(val, key) in templates">
-        <input type="radio" :id="key" :value="key" v-model="selectedTemplate">
-        <label :for="key">{{key}}</label>
-    </div>
+    <select v-model="selectedTemplate">
+        <option disabled value="">Select a template</option>
+        <option v-for="(val, key) in templates" :value="val.name">
+            {{key}}
+        </option>
+    </select>
 </div>
 
 ## Exclude nodemon
@@ -101,6 +103,7 @@ Provide a package name. By default, the template name becomes the package name.
 Once you have made your selections, copy this command and paste it in your terminal at the directory where you want the project to be created.
 
 ```shell-vue
+npm i -g quick_start_express
 {{generateCommand()}}
 ```
 
@@ -135,5 +138,14 @@ input[type="text"]::placeholder {
 label {
     margin-bottom: 0.5rem;
     display: inline-block;
+}
+
+select {
+    -webkit-appearance: listbox;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+option {
 }
 </style>
