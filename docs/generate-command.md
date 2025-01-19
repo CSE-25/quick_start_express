@@ -10,8 +10,7 @@ export default {
     data() {
         return {
             templates: templates,
-
-            selectedTemplate: "",
+            selectedTemplate: Object.entries(templates)[0][1].name,
             packageName: "",
             removeNodemon: false,
             removeDeps: false,
@@ -58,11 +57,14 @@ export default {
 
 # Generate Command
 
-## Select a template
+> [!Important] 
+> Make sure you have Node.js installed on your system before running the command. You can download it from [nodejs.org](https://nodejs.org/).
 
-Select a template. If a template is not provided, by default, the basic template is installed.
+## Which template?
 
-<div>
+Choose a template.
+
+<div class="custom-select">
     <select v-model="selectedTemplate">
         <option disabled value="">Select a template</option>
         <option v-for="(val, key) in templates" :value="val.name">
@@ -71,36 +73,36 @@ Select a template. If a template is not provided, by default, the basic template
     </select>
 </div>
 
-## Exclude nodemon
+## Exclude nodemon?
 
-By default, nodemon is added as a dev dependency. Add this flag if you do not want hot reloading with nodemon.
+Nodemon is included by default for hot reloading. Check this option if you don't want to include nodemon.
 
-<div>
+<div class="check">
     <input type="checkbox" id="remove-nodemon" v-model="removeNodemon">
-    <label for="remove-nodemon">Remove nodemon</label>
+    <label for="remove-nodemon">Exclude nodemon</label>
 </div>
 
-## Exclude dependencies
+## Exclude dependencies?
 
-By default, all dependencies are installed along with your package. Add this flag if you do not want to install the dependencies.
+All dependencies are installed by default. Check this option if you don't want to install them.
 
-<div>
+<div class="check">
     <input type="checkbox" id="remove-deps" v-model="removeDeps">
-    <label for="remove-deps">Remove dependencies</label>
+    <label for="remove-deps">Exclude dependencies</label>
 </div>
 
-## Package name
+## Package name?
 
-Provide a package name. By default, the template name becomes the package name.
+Enter a name for your server app. Default name is `qse-server`.
 
 <div>
     <input type="text" id="package-name" v-model="packageName" placeholder="Package Name">
     <p class="error-message" v-if="validatePackageName()">{{validatePackageName()}}</p>
 </div>
 
-## Command
+## The command
 
-Once you have made your selections, copy these commands and paste it in your terminal at the directory where you want the project to be created.
+After making your selections, copy the below command and run it in your terminal in the desired directory.
 
 ```shell-vue
 npm i -g quick_start_express
@@ -108,27 +110,31 @@ npm i -g quick_start_express
 ```
 
 <style>
+
 input[type="text"] {
     background-color: #161618;
-    width: 60%;
+    width: 100%;
     min-width: 200px;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     border: 1px solid transparent;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s ease;
+    color: #fff;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 input[type="text"]:hover {
     border-color: #a8b1ff;
+    background-color: #1e1e20;
 }
 
 input[type="text"]:focus {
     border-color: #a8b1ff;
+    background-color: #1e1e20;
 }
 
 input[type="text"]::placeholder {
-    color: grey;
+    color: #a8a8a8;
 }
 
 .error-message {
@@ -140,12 +146,73 @@ label {
     display: inline-block;
 }
 
-select {
-    -webkit-appearance: listbox;
-    padding: 0.5rem;
-    font-size: 0.9rem;
+.custom-select {
+    min-width: 352px;
+    position: relative;
 }
 
-option {
+.custom-select select {
+    appearance: none;
+    width: 100%;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    background-color: #161618;
+    font-size: 1rem;
 }
+
+.custom-select select:hover {
+    border-color: #a8b1ff;
+    background-color: #1e1e20;
+}
+
+.custom-select select:focus {
+    border-color: #a8b1ff;
+    background-color: #1e1e20;
+}
+
+.custom-select::before,
+.custom-select::after {
+    --size: 4px;
+    content: "";
+    position: absolute;
+    right: 16px;
+    pointer-events: none;
+}
+
+.custom-select::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid #fff;
+    top: 40%;
+}
+
+.custom-select::after {
+    border-left: var(--size) solid transparent;
+    border-right: var (--size) solid transparent;
+    border-top: var(--size) solid #fff;
+    top: 55%;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    background-color: #161618;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.check input[type="checkbox"] {
+    margin-right: 1rem;
+}
+
+.check label {
+    margin-bottom: 0;
+}
+
 </style>
+
