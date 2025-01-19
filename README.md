@@ -1,7 +1,7 @@
 [![npm latest published version](https://img.shields.io/npm/v/quick_start_express)](https://www.npmjs.com/package/quick_start_express)
 [![npm downloads last 18 months](https://img.shields.io/npm/d18m/quick_start_express)](https://www.npmjs.com/package/quick_start_express)
 [![npm last updated](https://img.shields.io/npm/last-update/quick_start_express)](https://www.npmjs.com/package/quick_start_express)
-[![build status](https://img.shields.io/github/actions/workflow/status/CSE-25/quick_start_express/runJestTests.yml)](https://github.com/CSE-25/quick_start_express)
+[![build status](https://img.shields.io/github/actions/workflow/status/CSE-25/quick_start_express/runTests.yml)](https://github.com/CSE-25/quick_start_express)
 
 # Quick Start Express
 
@@ -26,7 +26,7 @@ qse --version
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/d2f187b2-ec24-4e09-8814-3ae928447af6" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/2677b4fe-8ed6-4015-afd9-6796aab8b613" width="800px"/>
 </div>
 
 ## List
@@ -47,20 +47,58 @@ qse list
 
 ### Initialize a new Express.js server.
 
+Run the below command after installing the tool in the directory in which you want the template to be created.
+
 ```bash
 qse init
 ```
 
-### Output
+Select a template
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/08f2cf16-0de5-456a-8fc3-00ca295ff142" width="800px"/>
+</div>
+
+Answer a few questions to customize your template
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/b0278466-022b-469b-83ef-5f692f2b1bd9" width="800px"/>
+</div>
+
+#### Output
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/d965b1c9-e872-4fda-8f6c-096e1891ca43" width="800px"/>
+</div>
+
+### Initialize an Express.js server template (directly with flags).
+
+```bash
+qse init -t template_name
+```
+
+#### Output
 
 <div align="center">
    <img src="https://github.com/user-attachments/assets/84e2fc79-9b88-4817-baf4-56845d5ee756" width="800px"/>
 </div>
 
+### Initialize with a Docker Compose file and Dockerfile.
+
+```bash
+qse init -t template_name --docker-compose
+```
+
+### Output
+
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/e9147722-5b7f-4add-a321-7089e016e125" width="800px"/>
+</div>
+
 ### Initialize without nodemon.
 
 ```bash
-qse init --remove-nodemon
+qse init -t template_name --remove-nodemon
 ```
 
 ### Output
@@ -74,13 +112,13 @@ qse init --remove-nodemon
 Initialize a new Express.js server without installing dependencies.
 
 ```bash
-qse init --remove-deps
+qse init template_name --remove-deps
 ```
 
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/6ad96031-ff06-469f-8ec0-319d812558fa" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/88619fba-ebcb-4a27-bc10-688f4edf1861" width="800px"/>
 </div>
 
 ### Customize the Generated Server App Name

@@ -12,7 +12,8 @@
     "author": "quick_start_express",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "dotenv": "^16.4.7"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",

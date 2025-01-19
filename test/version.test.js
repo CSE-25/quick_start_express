@@ -1,6 +1,8 @@
 import packageJson from "../package.json";
 import { exec as execCallback } from "child_process";
 import { promisify } from "util";
+import { expect } from "@jest/globals";
+
 const exec = promisify(execCallback);
 
 describe("Version Command", () => {

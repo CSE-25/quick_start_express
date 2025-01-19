@@ -5,7 +5,9 @@
     "types": "dist/index",
     "type": "module",
     "scripts": {
+        "predev": "prisma migrate dev",
         "dev": "nodemon",
+        "prestart": "prisma migrate dev",
         "start": "tsx src/index",
         "migrate": "prisma migrate dev",
         "test": "echo \"Error: no test specified\" && exit 1"

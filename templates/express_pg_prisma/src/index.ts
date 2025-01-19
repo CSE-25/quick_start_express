@@ -1,3 +1,5 @@
+import "dotenv/config.js";
+
 import express from "express";
 import UserRoutes from "../routes/userRoutes";
 import { Request, Response } from "express";
@@ -5,7 +7,7 @@ import { testDbConnection } from "../db/connectDB";
 import { initLog } from "../util/initlog";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.SERVER_PORT || 8080;
 app.use(express.json());
 app.use("/users", UserRoutes);
 
@@ -18,7 +20,7 @@ const startServer = async () => {
     });
 
     app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+        console.log(`[INFO]: Server is running on http://localhost:${port}`);
     });
 };
 

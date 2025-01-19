@@ -10,6 +10,8 @@ import chalk from "chalk";
 import { createSpinner } from "nanospinner";
 import { metadata, commands, templates } from "./configs.js";
 import validate from "validate-npm-package-name";
+import { getServicesData, generateDockerComposeFile } from "./util/docker.js";
+import { initMenu } from "./util/menu.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,6 +40,10 @@ program
     .option(
         commands.init.options[3].flags,
         commands.init.options[3].description,
+    )
+    .option(
+        commands.init.options[4].flags,
+        commands.init.options[4].description,
     )
     .action((options) => {
         toolIntro();
@@ -111,9 +117,15 @@ program
 
 async function initCommand(options) {
     const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
-    const packageName = options.name || "quick-start-express-server"; // Default to 'quick-start-express-server' if no name is specified
+    const packageName = options.name || "qse-server"; // Default to 'qse-server' if no name is specified
     const removeNodemon = options.removeNodemon;
     const removeDependencies = options.removeDeps;
+    const dockerCompose = options.dockerCompose;
+
+    if (!options.template) {
+        initMenu(initCommand);
+        return;
+    }
 
     if (packageName) {
         const validateResult = validate(packageName);
@@ -143,8 +155,6 @@ async function initCommand(options) {
         return;
     }
 
-    console.log("Starting server initialization...");
-
     const targetDir = process.cwd();
     const templatePath = path.join(
         parentDir,
@@ -152,11 +162,72 @@ async function initCommand(options) {
         templates[selectedTemplate].name,
     );
 
+    const isUrl = templates[selectedTemplate].isUrl;
+    const needDB = templates[selectedTemplate].needDB;
+
+    let dockerTemplate =
+        selectedTemplate.split("_")[0] === "express" ||
+        selectedTemplate.split("_")[0] === "basic"
+            ? "express"
+            : selectedTemplate.split("_")[0];
+
+    const dockerTemplatePath = path.join(
+        parentDir,
+        "templates",
+        "Docker",
+        dockerTemplate,
+        "Dockerfile",
+    );
+
     const destinationPath = path.join(targetDir);
+    const dockerFileDestination = path.join(destinationPath, "Dockerfile");
+
+    if (dockerCompose) {
+        try {
+            const serviceData = await getServicesData(
+                packageName,
+                selectedTemplate,
+            );
+
+            console.log("Starting server initialization...");
+
+            const dockerSpinner = createSpinner(
+                `Creating Docker Compose File with Entered Services...`,
+            ).start();
+
+            const composeFileContent = generateDockerComposeFile(
+                serviceData,
+                packageName,
+                selectedTemplate,
+            );
+            const composeFilePath = path.join(targetDir, "docker-compose.yml");
+
+            fs.writeFileSync(composeFilePath, composeFileContent);
+            dockerSpinner.success({
+                text: `Docker Compose file generated successfully.`,
+            });
+        } catch (error) {
+            console.error(
+                chalk.red("Error generating Docker Compose file:"),
+                error,
+            );
+            return;
+        }
+    } else {
+        console.log("Starting server initialization...");
+    }
 
     const copySpinner = createSpinner("Creating server files...").start();
     try {
         await fs.copy(templatePath, destinationPath);
+        if (dockerCompose) {
+            try {
+                await fs.copyFile(dockerTemplatePath, dockerFileDestination);
+            } catch (error) {
+                copySpinner.error({ text: "Error creating Dockerfile.\n" });
+                console.error(error.message);
+            }
+        }
 
         copySpinner.success({ text: "Created server files successfully." });
 
@@ -255,6 +326,25 @@ async function initCommand(options) {
         console.log(
             chalk.yellow("Run with hot reloading:"),
             chalk.white.bold("npm run dev"),
+        );
+    }
+    if (dockerCompose) {
+        console.log(
+            chalk.yellow("To start your services with Docker Compose:"),
+            chalk.white.bold("docker compose up -d"),
+        );
+    }
+
+    if (dockerCompose && isUrl === true && needDB === true) {
+        console.log(
+            chalk.yellow("Important Note:"),
+            chalk.white("Use"),
+            chalk.blueBright.bold("host.docker.internal"),
+            chalk.white("instead of"),
+            chalk.blueBright.bold("localhost"),
+            chalk.white("in your Database Connection URL in the"),
+            chalk.blueBright.bold(".env"),
+            chalk.white("file for Docker to work correctly."),
         );
     }
 }

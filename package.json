@@ -16,6 +16,7 @@
     "license": "ISC",
     "bin": "./bin/index.js",
     "dependencies": {
+        "@inquirer/prompts": "^7.2.3",
         "chalk": "^5.3.0",
         "commander": "^12.1.0",
         "figlet": "^1.7.0",
@@ -24,6 +25,7 @@
         "validate-npm-package-name": "^6.0.0"
     },
     "devDependencies": {
+        "dotenv": "^16.4.7",
         "express": "^4.21.2",
         "jest": "^29.7.0",
         "prettier": "3.4.2",
