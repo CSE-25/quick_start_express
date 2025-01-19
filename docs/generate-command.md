@@ -57,7 +57,7 @@ export default {
 
 # Generate Command
 
-> [!Important] 
+> [!Important]
 > Make sure you have Node.js installed on your system before running the command. You can download it from [nodejs.org](https://nodejs.org/).
 
 ## Which template?
@@ -215,4 +215,3 @@ label {
 }
 
 </style>
-
