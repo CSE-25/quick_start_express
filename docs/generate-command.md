@@ -100,7 +100,7 @@ Provide a package name. By default, the template name becomes the package name.
 
 ## Command
 
-Once you have made your selections, copy this command and paste it in your terminal at the directory where you want the project to be created.
+Once you have made your selections, copy these commands and paste it in your terminal at the directory where you want the project to be created.
 
 ```shell-vue
 npm i -g quick_start_express
