@@ -1,19 +1,25 @@
 {
-  "name": "express_mysql",
+  "name": "quick-start-express-server",
   "version": "1.0.0",
-  "description": "Backend template for Express.js server with MySQL db.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "author": "quick_start_express",
+  "type": "module",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "fs": "^0.0.1-security",
-    "helmet": "^8.0.0",
-    "mysql2": "^3.11.3"
+    "express": "^4.17.1",
+    "helmet": "^8.0.0"
   },
-  "type": "module"
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  }
 }
