@@ -12,7 +12,6 @@ npm i -g quick_start_express
 
 > **:exclamation: Important:** A global install (with `-g`) is required for `qse` to function.
 
-
 ## Basic Commands
 
 > **:pushpin: Note:** Run the basic `qse` commands in your project directory.
@@ -24,6 +23,7 @@ Check the current installed version of QSE:
 ```shell
 qse -v
 ```
+
 ```shell
 qse --version
 ```
@@ -49,30 +49,35 @@ qse init
 Use flags along with `qse init` for direct initialisation of an Express server template:
 
 - **Specify a server template:**
-  ```shell
-  qse init -t <template_name>
-  ```
+
+    ```shell
+    qse init -t <template_name>
+    ```
 
 - **Add Docker support:**
-  ```shell
-  qse init -t <template_name> --docker-compose
-  ```
-  Includes a `Dockerfile` and `docker-compose.yml` for containerization.
+
+    ```shell
+    qse init -t <template_name> --docker-compose
+    ```
+
+    Includes a `Dockerfile` and `docker-compose.yml` for containerization.
 
 - **Exclude nodemon :**
-  ```shell
-  qse init -t <template_name> --remove-nodemon
-  ```
+
+    ```shell
+    qse init -t <template_name> --remove-nodemon
+    ```
 
 - **Skip dependency installation:**
-  ```shell
-  qse init -t <template_name> --remove-deps
-  ```
+
+    ```shell
+    qse init -t <template_name> --remove-deps
+    ```
 
 - **Set a custom name for server:**
-  ```shell
-  qse init -t <template_name> -n <app_name>
-  ```
+    ```shell
+    qse init -t <template_name> -n <app_name>
+    ```
 
 ### Clear
 
