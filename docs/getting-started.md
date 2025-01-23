@@ -1,88 +1,89 @@
-> [!IMPORTANT]
-> The docs is Work In Progress `WIP`, and the content is not final.
+# Getting Started with QSE
 
-# Markdown Extension Examples
+Quick Start Express (QSE) is a simple yet powerful CLI tool designed to quickly generate Express servers from multiple templates. It simplifies server setup with customizable configurations including server name, Docker Compose file generation, and more.
 
-This page demonstrates some of the built-in markdown extensions provided by VitePress.
+## Installation
 
-## Syntax Highlighting
+Install the `quick_start_express` package globally via npm. Run the following command in the terminal:
 
-VitePress provides Syntax Highlighting powered by [Shiki](https://github.com/shikijs/shiki), with additional features like line-highlighting:
-
-**Input**
-
-````md
-```js{4}
-export default {
-  data () {
-    return {
-      msg: 'Highlighted!'
-    }
-  }
-}
-```
-````
-
-**Output**
-
-```js{4}
-export default {
-  data () {
-    return {
-      msg: 'Highlighted!'
-    }
-  }
-}
+```shell
+npm i -g quick_start_express
 ```
 
-## Custom Containers
+> **:exclamation: Important:** A global install (with `-g`) is required for `qse` to function.
 
-**Input**
 
-```md
-::: info
-This is an info box.
-:::
+## Basic Commands
 
-::: tip
-This is a tip.
-:::
+> **:pushpin: Note:** Run the basic `qse` commands in your project directory.
 
-::: warning
-This is a warning.
-:::
+### Version
 
-::: danger
-This is a dangerous warning.
-:::
+Check the current installed version of QSE:
 
-::: details
-This is a details block.
-:::
+```shell
+qse -v
+```
+```shell
+qse --version
 ```
 
-**Output**
+### List
 
-::: info
-This is an info box.
-:::
+Display all available templates, commands and options:
 
-::: tip
-This is a tip.
-:::
+```shell
+qse list
+```
 
-::: warning
-This is a warning.
-:::
+### Init
 
-::: danger
-This is a dangerous warning.
-:::
+Run the following command in your project directory and answer a series of prompts to create a new Express server:
 
-::: details
-This is a details block.
-:::
+```shell
+qse init
+```
 
-## More
+#### Direct Initialisation with flags
 
-Check out the documentation for the [full list of markdown extensions](https://vitepress.dev/guide/markdown).
+Use flags along with `qse init` for direct initialisation of an Express server template:
+
+- **Specify a server template:**
+  ```shell
+  qse init -t <template_name>
+  ```
+
+- **Add Docker support:**
+  ```shell
+  qse init -t <template_name> --docker-compose
+  ```
+  Includes a `Dockerfile` and `docker-compose.yml` for containerization.
+
+- **Exclude nodemon :**
+  ```shell
+  qse init -t <template_name> --remove-nodemon
+  ```
+
+- **Skip dependency installation:**
+  ```shell
+  qse init -t <template_name> --remove-deps
+  ```
+
+- **Set a custom name for server:**
+  ```shell
+  qse init -t <template_name> -n <app_name>
+  ```
+
+### Clear
+
+Run the following command to delete all the files in the `current working directory`:
+
+```shell
+qse clear
+```
+
+> **:warning: WARNING:** This action is irreversible and all files in the `cwd` will be deleted.
+
+## License
+
+[GPL 3.0](https://github.com/CSE-25/quick_start_express/blob/main/LICENSE)
