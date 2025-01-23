@@ -146,7 +146,7 @@ qse clear
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/f886fc9f-7378-4904-8177-e7c0842becb6" width=600px"/>
+   <img src="https://github.com/user-attachments/assets/74d61468-5bc9-42bf-8ecb-9cb435ac2a9b" width=600px"/>
 </div>
 
 <br>
@@ -245,6 +245,7 @@ npm test
 - [K Venkatesh](https://github.com/venkatesh21bit)
 - [Vaibav](https://github.com/vaibav03)
 - [Pavan Prakash K](https://github.com/PavanCodes05)
+- [Adithya Menon R](https://github.com/adithya-menon-r)
 - [Phuong Thuy Nguyen](https://github.com/irisgranger)
 - [Abhinav Bansal](https://github.com/Abhinav-Bansal751)
 - [Guilherme Almeida Lopes](https://github.com/alguiguilo098)

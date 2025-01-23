@@ -7,6 +7,7 @@
     "scripts": {
         "dev": "node bin/index.js init",
         "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --verbose",
+        "format": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/prettier/bin/prettier.cjs . --write",
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs",
         "docs:preview": "vitepress preview docs",

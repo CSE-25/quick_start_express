@@ -12,6 +12,7 @@ import { metadata, commands, templates } from "./configs.js";
 import validate from "validate-npm-package-name";
 import { getServicesData, generateDockerComposeFile } from "./util/docker.js";
 import { initMenu } from "./util/menu.js";
+import { clearCWD } from "./util/clear.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -88,31 +89,7 @@ program
     .command(commands.clear.command)
     .description(commands.clear.description)
     .action(() => {
-        const targetDir = process.cwd();
-        console.log("Clearing Directory...", chalk.bgRed.white(targetDir));
-        const clearingDirectory = createSpinner(
-            "Deleting All Files...",
-        ).start();
-        try {
-            // Read the directory.
-            const files = fs.readdirSync(targetDir);
-
-            for (const file of files) {
-                const filePath = path.join(targetDir, file);
-                // if (file !== '.' && file !== '..') {
-                fs.removeSync(filePath);
-                // }
-            }
-
-            clearingDirectory.success({
-                text: "Successfully cleared project directory.",
-            });
-        } catch (error) {
-            clearingDirectory.error({
-                text: "Error clearing project directory",
-            });
-            console.error(error);
-        }
+        clearCWD();
     });
 
 async function initCommand(options) {
