@@ -10,11 +10,13 @@ Install the `quick_start_express` package globally via npm. Run the following co
 npm i -g quick_start_express
 ```
 
-> **:exclamation: Important:** A global install (with `-g`) is required for `qse` to function.
+> [!Important]
+> :exclamation: A global install (with `-g`) is required for `qse` to function.
 
 ## Basic Commands
 
-> **:pushpin: Note:** Run the basic `qse` commands in your project directory.
+> [!Note]
+> :pushpin: Run all basic `qse` commands in your project directory.
 
 ### Version
 
@@ -87,7 +89,8 @@ Run the following command to delete all the files in the `current working direct
 qse clear
 ```
 
-> **:warning: WARNING:** This action is irreversible and all files in the `cwd` will be deleted.
+> [!Warning]
+> :warning: This action is irreversible and all files in the `cwd` will be deleted.
 
 ## License
 
