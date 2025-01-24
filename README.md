@@ -126,7 +126,7 @@ qse init template_name --remove-deps
 Set a custom name for your generated Express server application during initialization.
 
 ```bash
-qse init -t basic -n app_name
+qse init -t template_name -n app_name
 ```
 
 ### Output
