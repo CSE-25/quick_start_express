@@ -92,6 +92,12 @@ export const templates = {
     },
     express_mongo: {
         name: "express_mongo",
+        isUrl: true,
+        needDB: true,
+        dbPort: "27017:27017",
+        dbName: "MongoDB",
+        serverPort: "8080:8080",
+        dbDockerImage: "mongo:latest",
     },
     express_mysql: {
         name: "express_mysql",
