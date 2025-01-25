@@ -35,7 +35,7 @@ describe("Express MySQL API Tests", () => {
     });
   });
 
-  describe("Testing API Endpoints", () => {
+  describe("testing API Endpoints", () => {
     it("GET /api/sample returns all  samples", async () => {
       const dataOfMock = [
         {
