@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "./server";
+import { expect } from "@jest/globals";
 
 describe("API Endpoints", () => {
     it("should return Hello World on GET /", async () => {

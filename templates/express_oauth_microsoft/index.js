@@ -1,17 +1,16 @@
-import { configDotenv } from "dotenv";
-// configDotenv({ path: "./templates/express_oauth_microsoft/.env" }) // Use when testing the tool.
-configDotenv({ path: "./.env" }); // Use when testing the template.
+import "dotenv/config.js";
 
 import express from "express";
 import passport from "passport";
 import { Strategy as MicrosoftStrategy } from "passport-microsoft";
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { appendFileSync } from "fs";
 
 import { authRouter } from "./router/authRouter.js";
 import { appRouter } from "./router/appRouter.js";
 import { initLog } from "./logs/logsInit.js";
+
+// import jwt from "jsonwebtoken"; // Uncomment this line when using token authentication.
 
 // For testing.
 // console.log(process.env.MICROSOFT_CLIENT_ID)
@@ -44,6 +43,7 @@ passport.use(
 );
 
 const app = express();
+const port = process.env.SERVER_PORT || 8080;
 
 app.use(passport.initialize());
 app.use(cookieParser());
@@ -53,13 +53,13 @@ initLog();
 app.use("/", appRouter);
 app.use("/auth", authRouter);
 
-app.listen(3000, (err) => {
+app.listen(port, (err) => {
     if (err) {
         const timeStamp = new Date().toLocaleString();
         const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
         console.error(errMessage);
         appendFileSync("./logs/index.log", `${errMessage}\n`);
     } else {
-        console.info(`[INFO]: Server is running on http://localhost:3000`);
+        console.info(`[INFO]: Server is running on http://localhost:${port}`);
     }
 });

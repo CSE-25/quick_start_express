@@ -3,7 +3,7 @@ import os from "os";
 const CONCURRENCY_LIMIT = os.availableParallelism();
 
 const appConfig = {
-    PORT: 3000,
+    PORT: process.env.SERVER_PORT || 8080,
     db: {
         host: process.env.DB_HOST || "localhost",
         port: process.env.DB_PORT || 5432,
