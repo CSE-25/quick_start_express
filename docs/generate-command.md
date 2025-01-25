@@ -14,6 +14,7 @@ export default {
             packageName: "",
             removeNodemon: false,
             removeDeps: false,
+            addDockerCompose: false
         }
     },
     methods: {
@@ -34,6 +35,10 @@ export default {
 
             if (this.removeDeps) {
                 command += " --remove-deps"
+            }
+
+            if (this.addDockerCompose) {
+                command += " --docker-compose"
             }
 
             return command
@@ -89,6 +94,15 @@ All dependencies are installed by default. Check this option if you don't want t
 <div class="check">
     <input type="checkbox" id="remove-deps" v-model="removeDeps">
     <label for="remove-deps">Exclude dependencies</label>
+</div>
+
+## Create Docker Compose file?
+
+Check this option if you want to have a Docker Compose in your project.
+
+<div class="check">
+    <input type="checkbox" id="add-docker-compose" v-model="addDockerCompose">
+    <label for="add-docker-compose">Add Docker Compose file</label>
 </div>
 
 ## Package name?
