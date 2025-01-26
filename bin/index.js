@@ -8,6 +8,7 @@ import { execSync } from "child_process";
 import figlet from "figlet";
 import chalk from "chalk";
 import { createSpinner } from "nanospinner";
+import { confirm } from "@inquirer/prompts";
 import { metadata, commands, templates } from "./configs.js";
 import validate from "validate-npm-package-name";
 import { getServicesData, generateDockerComposeFile } from "./util/docker.js";
@@ -141,6 +142,7 @@ async function initCommand(options) {
 
     const isUrl = templates[selectedTemplate].isUrl;
     const needDB = templates[selectedTemplate].needDB;
+    let runtimeNeedDB = false;
 
     let dockerTemplate =
         selectedTemplate.split("_")[0] === "express" ||
@@ -161,9 +163,24 @@ async function initCommand(options) {
 
     if (dockerCompose) {
         try {
+            if (needDB) {
+                runtimeNeedDB = await confirm({
+                    message:
+                        "Do you want to add a database service? (Default: No)",
+                    default: false,
+                });
+            }
+
+            const addCacheService = await confirm({
+                message: "Do you want to add a cache service? (Default: No)",
+                default: false,
+            });
+
             const serviceData = await getServicesData(
                 packageName,
                 selectedTemplate,
+                runtimeNeedDB,
+                addCacheService,
             );
 
             console.log("Starting server initialization...");
@@ -173,6 +190,7 @@ async function initCommand(options) {
             ).start();
 
             const composeFileContent = generateDockerComposeFile(
+                runtimeNeedDB,
                 serviceData,
                 packageName,
                 selectedTemplate,
@@ -312,7 +330,7 @@ async function initCommand(options) {
         );
     }
 
-    if (dockerCompose && isUrl === true && needDB === true) {
+    if (dockerCompose && isUrl === true && runtimeNeedDB === true) {
         console.log(
             chalk.yellow("Important Note:"),
             chalk.white("Use"),

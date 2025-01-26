@@ -58,6 +58,7 @@ export const commands = {
  * - dbName (string): Type of database used in the temaplate (e.g., "Postgres", "MySQL").
  * - serverPort (string): Port mapping for the application server in "host:container" format.
  * - dbDockerImage (string): Docker image to use for the database service.
+ * - dbDataPath (string): Path of the directory inside which the database container stores its persistent data.
  **/
 export const templates = {
     basic: {
@@ -80,6 +81,7 @@ export const templates = {
         dbName: "Postgres",
         serverPort: "8080:8080",
         dbDockerImage: "postgres:latest",
+        dbDataPath: "/var/lib/postgresql/data",
     },
     express_pg_sequelize: {
         name: "express_pg_sequelize",
@@ -89,6 +91,7 @@ export const templates = {
         dbName: "Postgres",
         serverPort: "8080:8080",
         dbDockerImage: "postgres:latest",
+        dbDataPath: "/var/lib/postgresql/data",
     },
     express_mongo: {
         name: "express_mongo",
@@ -98,6 +101,7 @@ export const templates = {
         dbName: "MongoDB",
         serverPort: "8080:8080",
         dbDockerImage: "mongo:latest",
+        dbDataPath: "/data/db",
     },
     express_mysql: {
         name: "express_mysql",
@@ -107,6 +111,7 @@ export const templates = {
         dbName: "MySQL",
         serverPort: "8080:8080",
         dbDockerImage: "mysql:latest",
+        dbDataPath: "/var/lib/mysql",
     },
     express_pg_prisma: {
         name: "express_pg_prisma",
@@ -116,6 +121,7 @@ export const templates = {
         dbName: "Postgres",
         serverPort: "8080:8080",
         dbDockerImage: "postgres:latest",
+        dbDataPath: "/var/lib/postgresql/data",
     },
     express_oauth_microsoft: {
         isUrl: false,

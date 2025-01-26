@@ -1,4 +1,4 @@
-import { confirm, select } from "@inquirer/prompts";
+import { select } from "@inquirer/prompts";
 import { templates } from "../configs.js";
 import chalk from "chalk";
 
@@ -42,7 +42,12 @@ async function promptCacheService(packageName) {
     };
 }
 
-export async function getServicesData(packageName, selectedTemplate) {
+export async function getServicesData(
+    packageName,
+    selectedTemplate,
+    needDB,
+    addCacheService,
+) {
     const templateData = templates[selectedTemplate];
     const services = [];
 
@@ -57,7 +62,7 @@ export async function getServicesData(packageName, selectedTemplate) {
     };
 
     // Database service configuration
-    if (templateData.needDB) {
+    if (needDB) {
         const dbService = {
             name: `${packageName}_db`,
             image: templateData.dbDockerImage,
@@ -66,12 +71,6 @@ export async function getServicesData(packageName, selectedTemplate) {
         };
         services.push(dbService);
     }
-
-    // Cache service configuration
-    const addCacheService = await confirm({
-        message: "Do you want to add a cache service? (Default: No)",
-        default: false,
-    });
 
     if (addCacheService) {
         services.push(await promptCacheService(packageName));
@@ -84,6 +83,7 @@ export async function getServicesData(packageName, selectedTemplate) {
 
 // Generates the File content for docker-compose.yml using the services data
 export function generateDockerComposeFile(
+    needDB,
     services,
     packageName,
     selectedTemplate,
@@ -107,7 +107,7 @@ export function generateDockerComposeFile(
         // service.build is enabled only for app server.
         if (service.build) {
             serviceConfig.build = { context: "." };
-            if (templateData.isUrl === false && templateData.needDB === true) {
+            if (templateData.isUrl === false && needDB === true) {
                 serviceConfig.environment = { DB_HOST: "host.docker.internal" };
             }
             appServiceName = service.name;
@@ -127,7 +127,7 @@ export function generateDockerComposeFile(
                 }
                 const volumeName = `${service.name}_data`;
                 serviceConfig.volumes = [
-                    `${volumeName}:/var/lib/${templateData.dbName.toLowerCase()}`,
+                    `${volumeName}:${templateData.dbDataPath}`,
                 ];
                 compose.volumes[volumeName] = {};
             }
@@ -173,7 +173,7 @@ ${Object.entries(compose.services)
                   .join("\n")}`
             : "";
         const volumes =
-            config.volumes && templateData.needDB
+            config.volumes && needDB
                 ? `      volumes:\n${config.volumes
                       .map((volume) => `        - ${volume}`)
                       .join("\n")}`
@@ -191,7 +191,7 @@ ${dependsOn}
     })
     .join("\n\n")}
 ${
-    templateData.needDB
+    needDB
         ? `\nvolumes:\n${Object.keys(compose.volumes)
               .map((volume) => `  ${volume}:`)
               .join("\n")}`
