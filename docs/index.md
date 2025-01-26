@@ -14,6 +14,9 @@ hero:
         - theme: brand
           text: View on NPM
           link: https://www.npmjs.com/package/quick_start_express
+        - theme: custom
+          text: Generate CLI Command
+          link: /generate-command
 
 features:
     - title: Fast

@@ -7,4 +7,3 @@ test/temp/
 docs/.vitepress/cache
 docs/.vitepress/dist
 .DS_Store
-.vitepress
