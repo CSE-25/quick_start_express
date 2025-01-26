@@ -1,7 +1,3 @@
----
-next: false
-prev: false
----
 
 <script>
 import { templates } from '../bin/configs';
@@ -206,7 +202,7 @@ label {
 
 .custom-select::after {
     border-left: var(--size) solid transparent;
-    border-right: var (--size) solid transparent;
+    border-right: var(--size) solid transparent;
     border-top: var(--size) solid #fff;
     top: 55%;
 }
