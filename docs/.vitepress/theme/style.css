@@ -1,0 +1,15 @@
+:root {
+    --custom-button-bg-color: #a8b1ff;
+    --custom-button-bg-color-hover: #b0befd;
+    --custom-button-color: #000;
+}
+
+.VPButton.custom {
+    background-color: var(--custom-button-bg-color);
+    border-color: transparent;
+    color: var(--custom-button-color);
+}
+
+.VPButton.custom:hover {
+    background-color: var(--custom-button-bg-color-hover);
+}
