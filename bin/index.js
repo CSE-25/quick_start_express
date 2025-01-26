@@ -318,7 +318,7 @@ async function initCommand(options) {
             chalk.white("Use"),
             chalk.blueBright.bold("host.docker.internal"),
             chalk.white("instead of"),
-            chalk.blueBright.bold("localhost"),
+            chalk.blueBright.bold("localhost/127.0.0.1"),
             chalk.white("in your Database Connection URL in the"),
             chalk.blueBright.bold(".env"),
             chalk.white("file for Docker to work correctly."),
