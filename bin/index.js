@@ -8,10 +8,9 @@ import { execSync } from "child_process";
 import figlet from "figlet";
 import chalk from "chalk";
 import { createSpinner } from "nanospinner";
-import { confirm } from "@inquirer/prompts";
 import { metadata, commands, templates } from "./configs.js";
 import validate from "validate-npm-package-name";
-import { getServicesData, generateDockerComposeFile } from "./util/docker.js";
+import { getServicesData, generateDockerComposeFile, userPrompts } from "./util/docker.js";
 import { initMenu } from "./util/menu.js";
 import { clearCWD } from "./util/clear.js";
 
@@ -163,24 +162,17 @@ async function initCommand(options) {
 
     if (dockerCompose) {
         try {
-            if (needDB) {
-                runtimeNeedDB = await confirm({
-                    message:
-                        "Do you want to add a database service? (Default: No)",
-                    default: false,
-                });
-            }
 
-            const addCacheService = await confirm({
-                message: "Do you want to add a cache service? (Default: No)",
-                default: false,
-            });
+            const userPrompt = await userPrompts(needDB);
+            if(needDB) {
+                runtimeNeedDB = userPrompt.runtimeNeedDB;
+            }
 
             const serviceData = await getServicesData(
                 packageName,
                 selectedTemplate,
                 runtimeNeedDB,
-                addCacheService,
+                userPrompt.addCacheService,
             );
 
             console.log("Starting server initialization...");

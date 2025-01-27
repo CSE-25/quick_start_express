@@ -1,6 +1,25 @@
-import { select } from "@inquirer/prompts";
+import { confirm, select } from "@inquirer/prompts";
 import { templates } from "../configs.js";
 import chalk from "chalk";
+
+export async function userPrompts(needDB) {
+    let runtimeNeedDB = false;
+
+    if (needDB) {
+        runtimeNeedDB = await confirm({
+            message:
+                "Do you wish to containerize DB service? (Default: No)",
+            default: false,
+        });
+    }
+
+    const addCacheService = await confirm({
+        message: "Do you want to add a cache service? (Default: No)",
+        default: false,
+    });
+
+    return {runtimeNeedDB, addCacheService};
+}
 
 async function promptCacheService(packageName) {
     // Predefined list of cache images.
