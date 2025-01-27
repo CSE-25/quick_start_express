@@ -16,9 +16,10 @@ A simple CLI tool to generate Express servers from multiple available templates.
 ```bash
     npm i -g quick_start_express
 ```
+
 > ⚠️ **WARNING:** `qse` requires a global install with `-g`. It doesn't work with a local install without `-g`.
 
-2. Run any qse commands in the target directory such as `qse init`, `qse clear`, `qse -v` ... etc. 
+2. Run any qse commands in the target directory such as `qse init`, `qse clear`, `qse -v` ... etc.
 
 # Commands
 

@@ -16,15 +16,15 @@
     "author": "Abhinav Ramakrishnan, Ashwin Narayanan S",
     "license": "ISC",
     "bin": {
-      "qse": "bin/index.js",
-      "quick_start_express": "bin/index.js"
+        "qse": "bin/index.js",
+        "quick_start_express": "bin/index.js"
     },
     "files": [
-      "bin",
-      "templates",
-      "README.md",
-      "LICENSE",
-      "package.json"
+        "bin",
+        "templates",
+        "README.md",
+        "LICENSE",
+        "package.json"
     ],
     "dependencies": {
         "@inquirer/prompts": "^7.2.3",
