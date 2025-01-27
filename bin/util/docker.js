@@ -7,9 +7,8 @@ export async function userPrompts(needDB) {
 
     if (needDB) {
         runtimeNeedDB = await confirm({
-            message:
-                "Do you wish to containerize DB service? (Default: No)",
-            default: false,
+            message: "Do you wish to containerize DB service? (Default: Yes)",
+            default: true,
         });
     }
 
@@ -18,7 +17,7 @@ export async function userPrompts(needDB) {
         default: false,
     });
 
-    return {runtimeNeedDB, addCacheService};
+    return { runtimeNeedDB, addCacheService };
 }
 
 async function promptCacheService(packageName) {

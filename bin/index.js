@@ -10,7 +10,11 @@ import chalk from "chalk";
 import { createSpinner } from "nanospinner";
 import { metadata, commands, templates } from "./configs.js";
 import validate from "validate-npm-package-name";
-import { getServicesData, generateDockerComposeFile, userPrompts } from "./util/docker.js";
+import {
+    getServicesData,
+    generateDockerComposeFile,
+    userPrompts,
+} from "./util/docker.js";
 import { initMenu } from "./util/menu.js";
 import { clearCWD } from "./util/clear.js";
 
@@ -162,9 +166,8 @@ async function initCommand(options) {
 
     if (dockerCompose) {
         try {
-
             const userPrompt = await userPrompts(needDB);
-            if(needDB) {
+            if (needDB) {
                 runtimeNeedDB = userPrompt.runtimeNeedDB;
             }
 
@@ -194,10 +197,8 @@ async function initCommand(options) {
                 text: `Docker Compose file generated successfully.`,
             });
         } catch (error) {
-            console.error(
-                chalk.red("Error generating Docker Compose file:"),
-                error,
-            );
+            console.log(chalk.red("Error generating Docker Compose file"));
+            console.error(error.message);
             return;
         }
     } else {
