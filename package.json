@@ -7,7 +7,7 @@
     "homepage": "https://cse-25.github.io/quick_start_express/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/CSE-25/quick_start_express"
+        "url": "git+https://github.com/CSE-25/quick_start_express.git"
     },
     "scripts": {
         "dev": "node bin/index.js init",
