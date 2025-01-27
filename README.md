@@ -26,7 +26,7 @@ qse --version
 ### Output
 
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/2677b4fe-8ed6-4015-afd9-6796aab8b613" width="800px"/>
+   <img src="https://github.com/user-attachments/assets/c6a160dc-5d82-424a-a7fd-4e95b538c2a5" width="800px"/>
 </div>
 
 ## List

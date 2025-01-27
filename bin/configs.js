@@ -1,7 +1,7 @@
 export const metadata = {
     command: "qse",
     name: "Quick Start Express",
-    version: "v1.0.6-beta",
+    version: "v2.0",
     description:
         "A simple CLI tool to generate Express servers from multiple available templates.",
     oneLineDescription:

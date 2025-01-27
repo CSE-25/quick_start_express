@@ -1,6 +1,6 @@
 {
     "name": "qse",
-    "version": "1.0.6-beta",
+    "version": "2.0",
     "description": "A simple CLI tool to generate Express servers from multiple available templates.",
     "type": "module",
     "main": "index.js",
