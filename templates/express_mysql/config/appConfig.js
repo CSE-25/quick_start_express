@@ -1,23 +1,26 @@
-const CONCURRENCY_LIMIT = 4;
+import os from "os";
+
+const CONCURRENCY_LIMIT = os.availableParallelism();
+
 export const appConfig = {
-    PORT: 5000,
+    PORT: process.env.SERVER_PORT || 8080,
     db: {
-        host: 'localhost',
-        user: 'root',
-        password: 'password',
-        database: 'database_name',
-        multipleStatements: true
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER || "root",
+        password: process.env.DB_PASSWORD || "password",
+        database: process.env.DB_NAME,
+        multipleStatements: true,
     },
     pool_db: {
-        host: 'localhost',
-        user: 'root',
-        password: 'password',
-        database: 'database_name',
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER || "root",
+        password: process.env.DB_PASSWORD || "password",
+        database: process.env.DB_NAME,
         waitForConnections: true,
         connectionLimit: CONCURRENCY_LIMIT,
         queueLimit: 0,
     },
     router: {
-        SAMPLE_PREFIX: '/api/sample',
+        SAMPLE_PREFIX: "/api/sample",
     },
-}
+};

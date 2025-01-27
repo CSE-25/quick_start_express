@@ -1,31 +1,46 @@
 {
-  "name": "quick_start_express",
-  "version": "1.0.6-beta",
-  "description": "A simple CLI tool to generate Express servers from multiple available templates.",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "dev": "node bin/index.js"
-  },
-  "author": "Abhinav Ramakrishnan, Ashwin Narayanan S",
-  "license": "GPL-3.0-only",
-  "bin": {
-    "qse": "bin/index.js",
-    "quick_start_express": "bin/index.js"
-  },
-  "files": [
-    "bin",
-    "templates",
-    "README.md",
-    "LICENSE",
-    "package.json"
-  ],
-  "dependencies": {
-    "chalk": "^5.3.0",
-    "commander": "^12.1.0",
-    "figlet": "^1.7.0",
-    "fs-extra": "^11.2.0",
-    "nanospinner": "^1.1.0",
-    "validate-npm-package-name": "^6.0.0"
-  }
+    "name": "quick_start_express",
+    "version": "2.0",
+    "description": "A simple CLI tool to generate Express servers from multiple available templates.",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "dev": "node bin/index.js init",
+        "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --verbose",
+        "format": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/prettier/bin/prettier.cjs . --write",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs",
+        "docs:preview": "vitepress preview docs",
+        "test:format": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/prettier/bin/prettier.cjs . --check"
+    },
+    "author": "Abhinav Ramakrishnan, Ashwin Narayanan S",
+    "license": "ISC",
+    "bin": {
+      "qse": "bin/index.js",
+      "quick_start_express": "bin/index.js"
+    },
+    "files": [
+      "bin",
+      "templates",
+      "README.md",
+      "LICENSE",
+      "package.json"
+    ],
+    "dependencies": {
+        "@inquirer/prompts": "^7.2.3",
+        "chalk": "^5.3.0",
+        "commander": "^12.1.0",
+        "figlet": "^1.7.0",
+        "fs-extra": "^11.2.0",
+        "nanospinner": "^1.1.0",
+        "validate-npm-package-name": "^6.0.0"
+    },
+    "devDependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "jest": "^29.7.0",
+        "prettier": "3.4.2",
+        "supertest": "^7.0.0",
+        "vitepress": "^1.5.0"
+    }
 }

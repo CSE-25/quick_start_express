@@ -1,9 +1,9 @@
-import { test, getAllSamples } from '../controller/sampleController.js'
-import { Router } from 'express'
+import { test, getAllSamples } from "../controller/sampleController.js";
+import { Router } from "express";
 
-const sampleRouter = Router()
+const sampleRouter = Router();
 
-sampleRouter.get('/test', test)
-sampleRouter.get('/all', getAllSamples)
+sampleRouter.get("/test", test);
+sampleRouter.get("/all", getAllSamples);
 
-export default sampleRouter
+export default sampleRouter;
