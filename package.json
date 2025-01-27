@@ -4,6 +4,11 @@
     "description": "A simple CLI tool to generate Express servers from multiple available templates.",
     "type": "module",
     "main": "index.js",
+    "homepage": "https://cse-25.github.io/quick_start_express/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CSE-25/quick_start_express"
+    },
     "scripts": {
         "dev": "node bin/index.js init",
         "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --verbose",
@@ -42,5 +47,17 @@
         "prettier": "3.4.2",
         "supertest": "^7.0.0",
         "vitepress": "^1.5.0"
+    },
+    "keywords": [
+        "cli",
+        "express",
+        "template",
+        "generator"
+    ],
+    "bugs": {
+        "url": "https://github.com/CSE-25/quick_start_express/issues"
+    },
+    "engines": {
+        "node": ">=22.0.0"
     }
 }
