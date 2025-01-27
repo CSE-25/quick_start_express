@@ -7,7 +7,7 @@
     "homepage": "https://cse-25.github.io/quick_start_express/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/CSE-25/quick_start_express"
+        "url": "git+https://github.com/CSE-25/quick_start_express.git"
     },
     "scripts": {
         "dev": "node bin/index.js init",
@@ -20,7 +20,9 @@
     },
     "author": "Abhinav Ramakrishnan, Ashwin Narayanan S",
     "license": "ISC",
-    "bin": "./bin/index.js",
+    "bin": {
+        "qse": "bin/index.js"
+    },
     "dependencies": {
         "@inquirer/prompts": "^7.2.3",
         "chalk": "^5.3.0",
