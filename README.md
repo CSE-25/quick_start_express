@@ -29,7 +29,6 @@ qse --version
    <img src="https://github.com/user-attachments/assets/c6a160dc-5d82-424a-a7fd-4e95b538c2a5" width="800px"/>
 </div>
 
-
 ## List
 
 List all available commands and options.
