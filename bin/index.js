@@ -50,6 +50,10 @@ program
         commands.init.options[4].flags,
         commands.init.options[4].description,
     )
+    .option(
+        commands.init.options[5].flags,
+        commands.init.options[5].description,
+    )
     .action((options) => {
         toolIntro();
         initCommand(options);
@@ -102,6 +106,7 @@ async function initCommand(options) {
     const removeNodemon = options.removeNodemon;
     const removeDependencies = options.removeDeps;
     const dockerCompose = options.dockerCompose;
+    const addCacheService = options.addCacheService;    
 
     if (!options.template) {
         initMenu(initCommand);
@@ -175,7 +180,7 @@ async function initCommand(options) {
                 packageName,
                 selectedTemplate,
                 runtimeNeedDB,
-                userPrompt.addCacheService,
+                addCacheService,
             );
 
             console.log("Starting server initialization...");
