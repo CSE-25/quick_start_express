@@ -37,6 +37,10 @@ export const commands = {
                 flags: "--remove-deps",
                 description: "Do not install the dependencies",
             },
+            {
+                flags: "--add-cache-service",
+                description: "Add a cache service to the Docker Compose file.",
+            },
         ],
     },
     list: {
