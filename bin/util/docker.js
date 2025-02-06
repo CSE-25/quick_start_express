@@ -12,7 +12,13 @@ export async function userPrompts(needDB) {
         });
     }
 
-    return { runtimeNeedDB };
+    // const addCacheService = await confirm({
+    //     message: "Do you want to add a cache service? (Default: No)",
+    //     default: false,
+    // });
+
+    return { runtimeNeedDB/* , addCacheService */ };
+
 }
 
 async function promptCacheService(packageName) {
