@@ -54,6 +54,10 @@ program
         commands.init.options[5].flags,
         commands.init.options[5].description,
     )
+    .option(
+        commands.init.options[6].flags,
+        commands.init.options[6].description,
+    )
     .action((options) => {
         toolIntro();
         initCommand(options);
@@ -106,7 +110,9 @@ async function initCommand(options) {
     const removeNodemon = options.removeNodemon;
     const removeDependencies = options.removeDeps;
     const dockerCompose = options.dockerCompose;
-    const addCacheService = options.addCacheService;    
+    const addCacheService = options.addCacheService; 
+    const addDb = options.db;
+    
 
     if (!options.template) {
         initMenu(initCommand);
@@ -149,7 +155,7 @@ async function initCommand(options) {
     );
 
     const isUrl = templates[selectedTemplate].isUrl;
-    const needDB = templates[selectedTemplate].needDB;
+    const needDB = templates[selectedTemplate].needDB && addDb;
     let runtimeNeedDB = false;
 
     let dockerTemplate =
