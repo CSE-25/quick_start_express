@@ -96,7 +96,9 @@ function computeSHA256Hash(dirName) {
         if (
             file === "node_modules" ||
             file === "package-lock.json" ||
-            file === "package.json"
+            file === "package.json" ||
+            file === "docker-compose.yml" ||
+            file === "Dockerfile"
         ) {
             continue;
         }
@@ -643,3 +645,192 @@ describe("init without nodemon option without installing deps.", () => {
 });
 
 // TODO: Add tests for docker-compose.
+
+function verifyDockerFiles() {
+    const dockerComposePath = path.join(tempDir, "docker-compose.yml");
+    const dockerfilePath = path.join(tempDir, "Dockerfile");
+
+    const existsBothDockerfiles =
+        existsSync(dockerComposePath) && existsSync(dockerfilePath);
+
+    expect(existsBothDockerfiles).toBe(true);
+}
+
+// TODO: Add tests for docker-compose.
+describe("init --docker-compose", () => {
+    beforeEach(() => {
+        initTempDirectory();
+    });
+
+    afterAll(() => {
+        clearTempDirectory();
+    });
+
+    test("basic with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "basic"),
+        );
+        await exec("node ../../bin/index.js init -t basic --docker-compose", {
+            cwd: tempDir,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_pg with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_pg"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_pg --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_pg_sequelize with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_pg_sequelize"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_pg_sequelize --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_mysql with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_mysql"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_mysql --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_oauth_microsoft with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_oauth_microsoft"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_oauth_microsoft --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_pg_prisma with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_pg_prisma"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_pg_prisma --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_mongo with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_mongo"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_mongo --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_oauth_google with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_oauth_google"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t express_oauth_google --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("basic_ts with docker configuration", async () => {
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "basic_ts"),
+        );
+        await exec(
+            "node ../../bin/index.js init -t basic_ts --docker-compose",
+            {
+                cwd: tempDir,
+            },
+        );
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(true);
+
+        verifyDockerFiles();
+    }, 20000);
+});
