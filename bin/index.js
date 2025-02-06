@@ -185,7 +185,7 @@ async function initCommand(options) {
                 packageName,
                 selectedTemplate,
                 runtimeNeedDB,
-                addCacheService,
+                addCacheService, // Original implementation: userPrompt.addCacheService,
             );
 
             console.log("Starting server initialization...");
