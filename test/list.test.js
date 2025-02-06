@@ -13,6 +13,7 @@ const list = `Available Commands:
   (Options: --remove-nodemon - Disable hot-reload support using nodemon)
   (Options: --remove-deps - Do not install the dependencies)
   (Options: --add-cache-service - Add a cache service to the Docker Compose file.)
+  (Options: --no-db - Remove db images from Docker Compose templates that need them.)
 - list: List all available commands and options.
 - clear: Clear the directory.
 

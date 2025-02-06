@@ -686,12 +686,12 @@ describe("init --docker-compose", () => {
         verifyDockerFiles();
     }, 20000);
 
-    test.skip("express_pg with docker configuration", async () => {
+    test("express_pg with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "express_pg"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_pg --docker-compose",
+            "node ../../bin/index.js init -t express_pg --docker-compose --no-db",
             {
                 cwd: tempDir,
             },
@@ -705,12 +705,12 @@ describe("init --docker-compose", () => {
         verifyDockerFiles();
     }, 20000);
 
-    test.skip("express_pg_sequelize with docker configuration", async () => {
+    test("express_pg_sequelize with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "express_pg_sequelize"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_pg_sequelize --docker-compose",
+            "node ../../bin/index.js init -t express_pg_sequelize --docker-compose --no-db",
             {
                 cwd: tempDir,
             },
@@ -724,12 +724,12 @@ describe("init --docker-compose", () => {
         verifyDockerFiles();
     }, 20000);
 
-    test.skip("express_mysql with docker configuration", async () => {
+    test("express_mysql with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "express_mysql"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_mysql --docker-compose",
+            "node ../../bin/index.js init -t express_mysql --docker-compose --no-db",
             {
                 cwd: tempDir,
             },
@@ -762,12 +762,12 @@ describe("init --docker-compose", () => {
         verifyDockerFiles();
     }, 20000);
 
-    test.skip("express_pg_prisma with docker configuration", async () => {
+    test("express_pg_prisma with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "express_pg_prisma"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_pg_prisma --docker-compose",
+            "node ../../bin/index.js init -t express_pg_prisma --docker-compose --no-db",
             {
                 cwd: tempDir,
             },
@@ -781,12 +781,12 @@ describe("init --docker-compose", () => {
         verifyDockerFiles();
     }, 20000);
 
-    test.skip("express_mongo with docker configuration", async () => {
+    test("express_mongo with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "express_mongo"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_mongo --docker-compose",
+            "node ../../bin/index.js init -t express_mongo --docker-compose --no-db",
             {
                 cwd: tempDir,
             },
