@@ -41,6 +41,10 @@ export const commands = {
                 flags: "--add-cache-service",
                 description: "Add a cache service to the Docker Compose file.",
             },
+            {
+                flags: "--no-db",
+                description: "Remove db images from Docker Compose templates that need them.",
+            },
         ],
     },
     list: {
