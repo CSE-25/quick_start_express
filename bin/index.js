@@ -110,9 +110,8 @@ async function initCommand(options) {
     const removeNodemon = options.removeNodemon;
     const removeDependencies = options.removeDeps;
     const dockerCompose = options.dockerCompose;
-    const addCacheService = options.addCacheService; 
+    const addCacheService = options.addCacheService;
     const addDb = options.db;
-    
 
     if (!options.template) {
         initMenu(initCommand);

@@ -17,8 +17,7 @@ export async function userPrompts(needDB) {
     //     default: false,
     // });
 
-    return { runtimeNeedDB/* , addCacheService */ };
-
+    return { runtimeNeedDB /* , addCacheService */ };
 }
 
 async function promptCacheService(packageName) {

@@ -101,9 +101,7 @@ function computeSHA256Hash(dirName) {
     ];
 
     for (const file of files) {
-        if (
-            ignoreFilesList.includes(file)
-        ) {
+        if (ignoreFilesList.includes(file)) {
             continue;
         }
         const filePath = path.join(dirName, file);

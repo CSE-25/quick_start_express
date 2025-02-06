@@ -43,7 +43,8 @@ export const commands = {
             },
             {
                 flags: "--no-db",
-                description: "Remove db images from Docker Compose templates that need them.",
+                description:
+                    "Remove db images from Docker Compose templates that need them.",
             },
         ],
     },
