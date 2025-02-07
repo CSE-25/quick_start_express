@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { program } from "commander";
+import { Option, program } from "commander";
 import fs from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -8,7 +8,12 @@ import { execSync } from "child_process";
 import figlet from "figlet";
 import chalk from "chalk";
 import { createSpinner } from "nanospinner";
-import { metadata, commands, templates } from "./configs.js";
+import {
+    metadata,
+    commands,
+    templates,
+    supportedDockerComposeCacheImages,
+} from "./configs.js";
 import validate from "validate-npm-package-name";
 import {
     getServicesData,
@@ -42,13 +47,25 @@ program
         commands.init.options[2].flags,
         commands.init.options[2].description,
     )
-    .option(
-        commands.init.options[3].flags,
-        commands.init.options[3].description,
+    .addOption(
+        // Option is used to automatically generate the help message
+        // and to validate the input.
+        new Option(
+            commands.init.options[3].flags,
+            commands.init.options[3].description,
+        ).choices(supportedDockerComposeCacheImages.concat("skip")),
     )
     .option(
         commands.init.options[4].flags,
         commands.init.options[4].description,
+    )
+    .option(
+        commands.init.options[5].flags,
+        commands.init.options[5].description,
+    )
+    .option(
+        commands.init.options[6].flags,
+        commands.init.options[6].description,
     )
     .action((options) => {
         toolIntro();
@@ -101,12 +118,16 @@ async function initCommand(options) {
     const packageName = options.name || "qse-server"; // Default to 'qse-server' if no name is specified
     const removeNodemon = options.removeNodemon;
     const removeDependencies = options.removeDeps;
-    const dockerCompose = options.dockerCompose;
 
     if (!options.template) {
-        initMenu(initCommand);
+        initMenu(initCommand, options);
         return;
     }
+
+    // Docker Compose options.
+    const dockerCompose = options.dockerCompose;
+    const cacheService = options.cacheService;
+    const skipDb = options.skipDb || false;
 
     if (packageName) {
         const validateResult = validate(packageName);
@@ -144,8 +165,7 @@ async function initCommand(options) {
     );
 
     const isUrl = templates[selectedTemplate].isUrl;
-    const needDB = templates[selectedTemplate].needDB;
-    let runtimeNeedDB = false;
+    const needDB = templates[selectedTemplate].needDB && !skipDb;
 
     let dockerTemplate =
         selectedTemplate.split("_")[0] === "express" ||
@@ -164,18 +184,19 @@ async function initCommand(options) {
     const destinationPath = path.join(targetDir);
     const dockerFileDestination = path.join(destinationPath, "Dockerfile");
 
+    let runtimeNeedDB = false;
     if (dockerCompose) {
         try {
-            const userPrompt = await userPrompts(needDB);
-            if (needDB) {
-                runtimeNeedDB = userPrompt.runtimeNeedDB;
-            }
+            console.log();
+            const userPrompt = await userPrompts(needDB, cacheService);
+            runtimeNeedDB = userPrompt.runtimeNeedDB;
 
             const serviceData = await getServicesData(
                 packageName,
                 selectedTemplate,
                 runtimeNeedDB,
                 userPrompt.addCacheService,
+                cacheService,
             );
 
             console.log("Starting server initialization...");
@@ -202,6 +223,7 @@ async function initCommand(options) {
             return;
         }
     } else {
+        console.log();
         console.log("Starting server initialization...");
     }
 
