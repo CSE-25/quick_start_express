@@ -1,39 +1,41 @@
 import { confirm, select } from "@inquirer/prompts";
-import { templates } from "../configs.js";
+import { supportedDockerComposeCacheImages, templates } from "../configs.js";
 import chalk from "chalk";
 
-export async function userPrompts(needDB) {
-    let runtimeNeedDB = false;
-
-    if (needDB) {
-        runtimeNeedDB = await confirm({
-            message: "Do you wish to containerize DB service? (Default: Yes)",
-            default: true,
-        });
+export async function userPrompts(needDB, cacheService) {
+    if (needDB || cacheService === undefined) {
+        console.log(chalk.bold(chalk.green("Docker Compose Configuration")));
     }
 
-    // const addCacheService = await confirm({
-    //     message: "Do you want to add a cache service? (Default: No)",
-    //     default: false,
-    // });
+    const runtimeNeedDB = needDB
+        ? await confirm({
+              message: "Do you wish to containerize DB service? (Default: Yes)",
+              default: true,
+          })
+        : false;
 
-    return { runtimeNeedDB /* , addCacheService */ };
+    const addCacheService =
+        cacheService === undefined
+            ? await confirm({
+                  message: "Do you want to add a cache service? (Default: No)",
+                  default: false,
+              })
+            : cacheService !== "skip";
+
+    return { runtimeNeedDB, addCacheService };
 }
 
-async function promptCacheService(packageName) {
-    // Predefined list of cache images.
-    const cacheImages = [
-        "redis:latest",
-        "redis:6.2",
-        "redis:7.0",
-        "memcached:latest",
-        "amazon/aws-elasticache:redis",
-    ];
-
-    const image = await select({
-        message: "Select the Docker image for the cache service:",
-        choices: cacheImages.map((img) => ({ name: img, value: img })),
-    });
+async function promptCacheService(packageName, cacheService) {
+    const image =
+        cacheService === undefined
+            ? await select({
+                  message: "Select the Docker image for the cache service:",
+                  choices: supportedDockerComposeCacheImages.map((img) => ({
+                      name: img,
+                      value: img,
+                  })),
+              })
+            : cacheService;
 
     let ports;
     switch (image) {
@@ -65,11 +67,10 @@ export async function getServicesData(
     selectedTemplate,
     needDB,
     addCacheService,
+    cacheService,
 ) {
     const templateData = templates[selectedTemplate];
     const services = [];
-
-    console.log(chalk.bold(chalk.green("Docker Compose Configuration")));
 
     // App service configuration.
     const appService = {
@@ -91,7 +92,7 @@ export async function getServicesData(
     }
 
     if (addCacheService) {
-        services.push(await promptCacheService(packageName));
+        services.push(await promptCacheService(packageName, cacheService));
     }
 
     services.push(appService);

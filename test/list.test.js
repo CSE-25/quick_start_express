@@ -10,10 +10,10 @@ const list = `Available Commands:
   (Options: -t, --template <template> - Specify template to use)
   (Options: -n, --name <name> - Specify the name of the package)
   (Options: --docker-compose - Generate a Docker Compose file in the project.)
+  (Options: --cache-service <skip|name> - Specify the cache service to add to the Docker Compose file or 'skip' to skip it.)
+  (Options: --skip-db - Specify whether to skip or add database images to the Docker Compose file.)
   (Options: --remove-nodemon - Disable hot-reload support using nodemon)
   (Options: --remove-deps - Do not install the dependencies)
-  (Options: --add-cache-service - Add a cache service to the Docker Compose file.)
-  (Options: --no-db - Remove db images from Docker Compose templates that need them.)
 - list: List all available commands and options.
 - clear: Clear the directory.
 

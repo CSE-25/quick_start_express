@@ -8,6 +8,14 @@ export const metadata = {
         "Welcome to QSE: A simple Express.js server generator CLI tool.",
 };
 
+export const supportedDockerComposeCacheImages = [
+    "redis:latest",
+    "redis:6.2",
+    "redis:7.0",
+    "memcached:latest",
+    "amazon/aws-elasticache:redis",
+];
+
 export const commands = {
     version: {
         command: "-v, --version",
@@ -30,21 +38,22 @@ export const commands = {
                 description: "Generate a Docker Compose file in the project.",
             },
             {
+                flags: `--cache-service <skip|name>`,
+                description:
+                    "Specify the cache service to add to the Docker Compose file or 'skip' to skip it.",
+            },
+            {
+                flags: "--skip-db",
+                description:
+                    "Specify whether to skip or add database images to the Docker Compose file.",
+            },
+            {
                 flags: "--remove-nodemon",
                 description: "Disable hot-reload support using nodemon",
             },
             {
                 flags: "--remove-deps",
                 description: "Do not install the dependencies",
-            },
-            {
-                flags: "--add-cache-service",
-                description: "Add a cache service to the Docker Compose file.",
-            },
-            {
-                flags: "--no-db",
-                description:
-                    "Remove db images from Docker Compose templates that need them.",
             },
         ],
     },

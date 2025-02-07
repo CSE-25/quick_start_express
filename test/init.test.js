@@ -117,6 +117,16 @@ function computeSHA256Hash(dirName) {
     return hash.digest("hex");
 }
 
+function verifyDockerFiles() {
+    const dockerComposePath = path.join(tempDir, "docker-compose.yml");
+    const dockerfilePath = path.join(tempDir, "Dockerfile");
+
+    const existsBothDockerfiles =
+        existsSync(dockerComposePath) && existsSync(dockerfilePath);
+
+    expect(existsBothDockerfiles).toBe(true);
+}
+
 // Verify if installing dependencies is happening by default
 // along with nodemon in package.json by default.
 describe("normal init with default settings", () => {
@@ -646,20 +656,7 @@ describe("init without nodemon option without installing deps.", () => {
     }, 20000);
 });
 
-// TODO: Add tests for docker-compose.
-
-function verifyDockerFiles() {
-    const dockerComposePath = path.join(tempDir, "docker-compose.yml");
-    const dockerfilePath = path.join(tempDir, "Dockerfile");
-
-    const existsBothDockerfiles =
-        existsSync(dockerComposePath) && existsSync(dockerfilePath);
-
-    expect(existsBothDockerfiles).toBe(true);
-}
-
-// TODO: Add tests for docker-compose.
-describe("init --docker-compose", () => {
+describe("init with docker-compose without cache service and db", () => {
     beforeEach(() => {
         initTempDirectory();
     });
@@ -672,14 +669,17 @@ describe("init --docker-compose", () => {
         const originalHash = computeSHA256Hash(
             path.join(__dirname, "..", "templates", "basic"),
         );
-        await exec("node ../../bin/index.js init -t basic --docker-compose", {
-            cwd: tempDir,
-        });
+        await exec(
+            "node ../../bin/index.js init -t basic --remove-deps --docker-compose --cache-service skip",
+            {
+                cwd: tempDir,
+            },
+        );
 
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -689,7 +689,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_pg"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_pg --docker-compose --no-db",
+            "node ../../bin/index.js init -t express_pg --remove-deps --docker-compose --skip-db --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -698,7 +698,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -708,7 +708,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_pg_sequelize"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_pg_sequelize --docker-compose --no-db",
+            "node ../../bin/index.js init -t express_pg_sequelize --remove-deps --docker-compose --skip-db --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -717,7 +717,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -727,7 +727,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_mysql"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_mysql --docker-compose --no-db",
+            "node ../../bin/index.js init -t express_mysql --remove-deps --docker-compose --skip-db --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -736,7 +736,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -746,7 +746,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_oauth_microsoft"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_oauth_microsoft --docker-compose",
+            "node ../../bin/index.js init -t express_oauth_microsoft --remove-deps --docker-compose --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -755,7 +755,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -765,7 +765,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_pg_prisma"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_pg_prisma --docker-compose --no-db",
+            "node ../../bin/index.js init -t express_pg_prisma --remove-deps --docker-compose --skip-db --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -774,7 +774,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -784,7 +784,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_mongo"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_mongo --docker-compose --no-db",
+            "node ../../bin/index.js init -t express_mongo --remove-deps --docker-compose --skip-db --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -793,7 +793,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -803,7 +803,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "express_oauth_google"),
         );
         await exec(
-            "node ../../bin/index.js init -t express_oauth_google --docker-compose",
+            "node ../../bin/index.js init -t express_oauth_google --remove-deps --docker-compose --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -812,7 +812,7 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
@@ -822,7 +822,7 @@ describe("init --docker-compose", () => {
             path.join(__dirname, "..", "templates", "basic_ts"),
         );
         await exec(
-            "node ../../bin/index.js init -t basic_ts --docker-compose",
+            "node ../../bin/index.js init -t basic_ts --remove-deps --docker-compose --cache-service skip",
             {
                 cwd: tempDir,
             },
@@ -831,8 +831,11 @@ describe("init --docker-compose", () => {
         const commandHash = computeSHA256Hash(tempDir);
         expect(commandHash).toEqual(originalHash);
         expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
     }, 20000);
 });
+
+// TODO: Add tests for init with docker-compose with cache service specified.
+// TODO: Add tests for init with docker-compose with db enabled.
