@@ -1,21 +1,25 @@
-import { confirm, select } from "@inquirer/prompts";
 import { templates } from "../configs.js";
 import chalk from "chalk";
+import { confirmationQuestion, selectionQuestion } from "./question/index.js";
+import { askConfirmation, askSelection } from "./question/inquirer.js";
+
+const confirmQuestion = confirmationQuestion(askConfirmation);
+const selectQuestion = selectionQuestion(askSelection);
 
 export async function userPrompts(needDB) {
     let runtimeNeedDB = false;
 
     if (needDB) {
-        runtimeNeedDB = await confirm({
-            message: "Do you wish to containerize DB service? (Default: Yes)",
-            default: true,
-        });
+        runtimeNeedDB = await confirmQuestion(
+            "Do you wish to containerize DB service? (Default: Yes)",
+            true,
+        );
     }
 
-    const addCacheService = await confirm({
-        message: "Do you want to add a cache service? (Default: No)",
-        default: false,
-    });
+    const addCacheService = await confirmQuestion(
+        "Do you want to add a cache service? (Default: No)",
+        false,
+    );
 
     return { runtimeNeedDB, addCacheService };
 }
@@ -30,10 +34,10 @@ async function promptCacheService(packageName) {
         "amazon/aws-elasticache:redis",
     ];
 
-    const image = await select({
-        message: "Select the Docker image for the cache service:",
-        choices: cacheImages.map((img) => ({ name: img, value: img })),
-    });
+    const image = await selectQuestion(
+        "Select the Docker image for the cache service:",
+        cacheImages,
+    );
 
     let ports;
     switch (image) {
