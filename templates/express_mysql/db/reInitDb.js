@@ -7,9 +7,13 @@ const reInitDb = async (db) => {
         await db.promise().query(data);
         console.info("[INFO]: Database re-initialized.");
     } catch (err) {
-        console.error(`[ERROR]: ${new Date().toLocaleString()} - reInitDb - ${err.message}`);
+        console.error(
+            `[ERROR]: ${new Date().toLocaleString()} - reInitDb - ${err.message}`,
+        );
         if (err.message.includes("Unknown database")) {
-            console.warn(`[HINT]: Database '${appConfig.db.database}' does not exist. Please create it by running the following command in your MySQL shell: 'CREATE DATABASE ${appConfig.db.database}'.`);
+            console.warn(
+                `[HINT]: Database '${appConfig.db.database}' does not exist. Please create it by running the following command in your MySQL shell: 'CREATE DATABASE ${appConfig.db.database}'.`,
+            );
         }
     } finally {
         return new Promise((resolve, reject) => {
