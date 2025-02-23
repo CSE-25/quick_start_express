@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 import { exec as execCallback } from "child_process";
 import { promisify } from "util";
 import stripAnsi from "strip-ansi";
-import { expect } from "@jest/globals";
+import { expect, jest } from "@jest/globals";
 
 const exec = promisify(execCallback);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -92,12 +92,16 @@ function computeSHA256Hash(dirName) {
     const hash = createHash("sha256");
     const files = readdirSync(dirName);
 
+    const ignoreFilesList = [
+        "node_modules",
+        "package-lock.json",
+        "package.json",
+        "docker-compose.yml",
+        "Dockerfile",
+    ];
+
     for (const file of files) {
-        if (
-            file === "node_modules" ||
-            file === "package-lock.json" ||
-            file === "package.json"
-        ) {
+        if (ignoreFilesList.includes(file)) {
             continue;
         }
         const filePath = path.join(dirName, file);
@@ -111,6 +115,16 @@ function computeSHA256Hash(dirName) {
     }
 
     return hash.digest("hex");
+}
+
+function verifyDockerFiles() {
+    const dockerComposePath = path.join(tempDir, "docker-compose.yml");
+    const dockerfilePath = path.join(tempDir, "Dockerfile");
+
+    const existsBothDockerfiles =
+        existsSync(dockerComposePath) && existsSync(dockerfilePath);
+
+    expect(existsBothDockerfiles).toBe(true);
 }
 
 // Verify if installing dependencies is happening by default
@@ -643,3 +657,250 @@ describe("init without nodemon option without installing deps.", () => {
 });
 
 // TODO: Add tests for docker-compose.
+
+const mockAskSelection = jest.fn();
+const mockAskConfirmation = jest.fn();
+
+jest.unstable_mockModule("../bin/util/question/inquirer.js", () => ({
+    askConfirmation: mockAskConfirmation,
+    askSelection: mockAskSelection,
+}));
+
+// Import the module after mocking
+const { initCommand } = await import("../bin/init.js");
+const { askConfirmation, askSelection } = await import(
+    "../bin/util/question/inquirer.js"
+);
+
+describe("init with docker-compose with cache service and db", () => {
+    beforeEach(() => {
+        jest.resetModules();
+        initTempDirectory();
+    });
+
+    afterAll(() => {
+        clearTempDirectory();
+        jest.clearAllMocks();
+    });
+
+    test("basic with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "basic"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "basic",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_pg with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_pg"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_pg",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_pg_sequelize with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_pg_sequelize"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_pg_sequelize",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_mysql with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_mysql"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_mysql",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_oauth_microsoft with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_oauth_microsoft"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_oauth_microsoft",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_pg_prisma with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_pg_prisma"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_pg_prisma",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_mongo with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_mongo"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_mongo",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("express_oauth_google with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "express_oauth_google"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "express_oauth_google",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+
+    test("basic_ts with docker configuration, cache and DB", async () => {
+        jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+        const originalHash = computeSHA256Hash(
+            path.join(__dirname, "..", "templates", "basic_ts"),
+        );
+
+        mockAskConfirmation.mockResolvedValueOnce(true);
+        mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+        await initCommand({
+            template: "basic_ts",
+            dockerCompose: true,
+            removeDeps: true,
+        });
+
+        const commandHash = computeSHA256Hash(tempDir);
+        expect(commandHash).toEqual(originalHash);
+        expect(hasNodemon()).toBe(true);
+        expect(nodeModulesExist()).toBe(false);
+
+        verifyDockerFiles();
+    }, 20000);
+});
