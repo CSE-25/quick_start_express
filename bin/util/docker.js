@@ -3,20 +3,20 @@ import chalk from "chalk";
 import { confirmationQuestion, selectionQuestion } from "./question/index.js";
 import { askConfirmation, askSelection } from "./question/inquirer.js";
 
-const confirmQuestion = confirmationQuestion(askConfirmation);
-const selectQuestion = selectionQuestion(askSelection);
+// const confirmQuestion = (confirmationQuestion(askConfirmation));
+// const selectQuestion = selectionQuestion(askSelection);
 
 export async function userPrompts(needDB) {
-    let runtimeNeedDB = false;
+    let runtimeNeedDB = false;    
 
     if (needDB) {
-        runtimeNeedDB = await confirmQuestion(
+        runtimeNeedDB = await askConfirmation(
             "Do you wish to containerize DB service? (Default: Yes)",
             true,
         );
     }
 
-    const addCacheService = await confirmQuestion(
+    const addCacheService = await askConfirmation(
         "Do you want to add a cache service? (Default: No)",
         false,
     );
@@ -34,7 +34,7 @@ async function promptCacheService(packageName) {
         "amazon/aws-elasticache:redis",
     ];
 
-    const image = await selectQuestion(
+    const image = await askSelection(
         "Select the Docker image for the cache service:",
         cacheImages,
     );
