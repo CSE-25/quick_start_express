@@ -27,9 +27,9 @@ app.use(appConfig.router.SAMPLE_PREFIX, sampleRouter);
 
 initLog();
 const db = connectToDb();
-reInitDb(db);
+await reInitDb(db);
 
-app.listen(appConfig.PORT, (err) => {
+const server = app.listen(appConfig.PORT, (err) => {
     if (err) {
         const timeStamp = new Date().toLocaleString();
         const errMessage = `[ERROR]: ${timeStamp} - ${err.message}`;
@@ -44,3 +44,5 @@ app.listen(appConfig.PORT, (err) => {
         );
     }
 });
+
+export { app, server };
