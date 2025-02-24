@@ -81,10 +81,9 @@ program
             const commandInfo = commands[cmd];
             if (commandInfo.command) {
                 console.log(
-                    `- ${commandInfo.command}${
-                        commandInfo.description
-                            ? ": " + commandInfo.description
-                            : ""
+                    `- ${commandInfo.command}${commandInfo.description
+                        ? ": " + commandInfo.description
+                        : ""
                     }`,
                 );
             }
@@ -92,8 +91,7 @@ program
             if (commandInfo.options) {
                 commandInfo.options.forEach((option) => {
                     console.log(
-                        `  (Options: ${option.flags}${
-                            option.description ? " - " + option.description : ""
+                        `  (Options: ${option.flags}${option.description ? " - " + option.description : ""
                         })`,
                     );
                 });
@@ -111,6 +109,128 @@ program
     .description(commands.clear.description)
     .action(() => {
         clearCWD();
+    });
+
+program
+    .command(commands.add.command)
+    .description(commands.add.description)
+    .action((template) => {
+        const parentDir = path.resolve(__dirname, "..");
+        const templatePath = path.join(parentDir, "templates", template);
+        const currentPath = process.cwd();
+        const currentPackageJsonPath = path.join(currentPath, "package.json");
+        const currentPackageJson = fs.existsSync(currentPackageJsonPath)
+            ? JSON.parse(fs.readFileSync(currentPackageJsonPath, "utf-8"))
+            : {};
+        const currentTemplateName = currentPackageJson.name;
+
+        if (!fs.existsSync(templatePath)) {
+            console.error(`Template "${template}" not found.`);
+            process.exit(1);
+        }
+
+        const templateItems = fs.readdirSync(templatePath);
+        const currentItems = fs.readdirSync(currentPath);
+        const commonItems = currentItems.filter((item) => templateItems.includes(item));
+
+        commonItems.forEach((item) => {
+            const templateItemPath = path.join(templatePath, item);
+            const currentItemPath = path.join(currentPath, item);
+
+            if (fs.statSync(templateItemPath).isDirectory() && fs.statSync(currentItemPath).isDirectory()) {
+                const templateSubDir = path.join(currentPath, item, `${template}`);
+                const currentSubDir = path.join(currentPath, item, `${currentTemplateName}`);
+
+                fs.ensureDirSync(templateSubDir);
+                fs.ensureDirSync(currentSubDir);
+
+                fs.copySync(templateItemPath, templateSubDir, { overwrite: true });
+
+                fs.readdirSync(currentItemPath).forEach((subItem) => {
+                    const srcPath = path.join(currentItemPath, subItem);
+                    const destPath = path.join(currentSubDir, subItem);
+                    if (subItem !== template && subItem !== currentTemplateName) {
+                        fs.moveSync(srcPath, destPath, { overwrite: true });
+                    }
+                });
+            } else {
+                // console.log(`${item} is a common file`);
+            }
+        });
+
+        const updateImports = (dirPath) => {
+            fs.readdirSync(dirPath).forEach((item) => {
+                const fullPath = path.join(dirPath, item);
+
+                if (fs.statSync(fullPath).isDirectory()) {
+                    if (item !== "node_modules") {
+                        updateImports(fullPath); 
+                    }
+                    return;
+                }
+
+                if (!/\.(js|ts|jsx|tsx)$/.test(item)) {
+                    return;
+                }
+
+                let content = fs.readFileSync(fullPath, "utf-8");
+                let lines = content.split("\n");
+                let updated = false;
+
+                lines = lines.map((line) => {
+                    if (!line.trim().startsWith("import")) {
+                        return line;
+                    }
+                    // console.log(line);
+
+                    return line.replace(/from ['"](.+\.js)['"]/, (match, importPath) => {
+                        console.log("Matched:", match);
+                        console.log("Original Import Path:", importPath);
+
+                        const currentDir = path.dirname(fullPath);
+                        const templateName = path.basename(currentDir);
+                        console.log("Base name: ", path.basename(currentDir));
+
+                        const adjustedImportPath = path.join(
+                            path.dirname(importPath),
+                            templateName,
+                            path.basename(importPath)
+                        );
+                        console.log("testttt: ",currentDir, path.dirname(importPath));
+
+                        const absoluteImportPath = path.resolve(currentDir, adjustedImportPath);
+
+                        console.log("Adjusted Import Path:", adjustedImportPath);
+                        console.log("Resolved Absolute Path:", absoluteImportPath);
+                        console.log();
+
+                        if (!fs.existsSync(absoluteImportPath)) {
+                            console.log("File does not exist after adjustment, keeping original import.");
+                            return match;
+                        }
+
+                        // Compute the new relative import path
+                        const newRelativePath = path.relative(currentDir, absoluteImportPath).replace(/\\/g, "/");
+
+                        console.log("Updated Import Path:", newRelativePath);
+                        console.log();
+
+                        updated = true;
+
+                        return `from '${newRelativePath}'`;
+                    });
+
+                });
+
+                if (updated) {
+                    fs.writeFileSync(fullPath, lines.join("\n"), "utf-8");
+                    console.log(`Updated imports in: ${fullPath}`);
+                }
+            });
+        };
+
+        updateImports(currentPath);
+        console.log("Import paths updated successfully.");
     });
 
 async function initCommand(options) {
@@ -169,7 +289,7 @@ async function initCommand(options) {
 
     let dockerTemplate =
         selectedTemplate.split("_")[0] === "express" ||
-        selectedTemplate.split("_")[0] === "basic"
+            selectedTemplate.split("_")[0] === "basic"
             ? "express"
             : selectedTemplate.split("_")[0];
 

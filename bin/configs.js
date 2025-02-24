@@ -65,6 +65,10 @@ export const commands = {
         command: "clear",
         description: "Clear the directory.",
     },
+    add: {
+        command: 'add <template>',
+        description: "Extend current template with another template."
+    }
 };
 
 /**
