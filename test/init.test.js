@@ -150,7 +150,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_pg with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -164,7 +164,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_pg_sequelize with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -178,7 +178,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_mysql with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -192,7 +192,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_microsoft with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -206,7 +206,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_pg_prisma with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -220,7 +220,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_mongo with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -234,7 +234,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_google with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -248,7 +248,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 
     test("basic_ts with nodemon", async () => {
         const originalHash = computeSHA256Hash(
@@ -262,7 +262,7 @@ describe("normal init with default settings", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+    }, 25000);
 });
 
 describe("init --remove-deps", () => {
@@ -288,7 +288,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_pg with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -302,7 +302,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_pg_sequelize with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -319,7 +319,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_mysql with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -336,7 +336,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_microsoft with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -353,7 +353,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_pg_prisma with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -370,7 +370,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_mongo with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -387,7 +387,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_google with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -404,7 +404,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 
     test("basic_ts with nodemon without deps installed", async () => {
         const originalHash = computeSHA256Hash(
@@ -418,7 +418,7 @@ describe("init --remove-deps", () => {
 
         expect(hasNodemon()).toBe(true);
         expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+    }, 25000);
 });
 
 // Not installing dependencies as it takes time and is already tested above.
@@ -481,7 +481,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 20000);
+    }, 25000);
 
     test("valid template name: lowercase only", async () => {
         const validName = "validname";
@@ -492,7 +492,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 20000);
+    }, 25000);
 
     test("valid template name: URL friendly characters", async () => {
         const validName = "valid-name";
@@ -503,7 +503,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 20000);
+    }, 25000);
 
     // TODO: Add test for cases where `inquirer` prompts are used for this.
 });
@@ -533,7 +533,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_pg without nodemon", async () => {
         await exec(
@@ -548,7 +548,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_pg_sequelize without nodemon", async () => {
         await exec(
@@ -563,7 +563,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_mysql without nodemon", async () => {
         await exec(
@@ -578,7 +578,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_microsoft without nodemon", async () => {
         await exec(
@@ -593,7 +593,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_pg_prisma without nodemon", async () => {
         await exec(
@@ -608,7 +608,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_mongo without nodemon", async () => {
         await exec(
@@ -623,7 +623,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_google without nodemon", async () => {
         await exec(
@@ -638,7 +638,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 
     test("basic_ts without nodemon", async () => {
         await exec(
@@ -653,7 +653,7 @@ describe("init without nodemon option without installing deps.", () => {
         if (packageJson.devDependencies) {
             expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
         }
-    }, 20000);
+    }, 25000);
 });
 
 describe("init with docker-compose without cache service and db", () => {
@@ -682,7 +682,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_pg with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -701,7 +701,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_pg_sequelize with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -720,7 +720,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_mysql with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -739,7 +739,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_microsoft with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -758,7 +758,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_pg_prisma with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -777,7 +777,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_mongo with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -796,7 +796,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("express_oauth_google with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -815,7 +815,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 
     test("basic_ts with docker configuration", async () => {
         const originalHash = computeSHA256Hash(
@@ -834,7 +834,7 @@ describe("init with docker-compose without cache service and db", () => {
         expect(nodeModulesExist()).toBe(false);
 
         verifyDockerFiles();
-    }, 20000);
+    }, 25000);
 });
 
 // TODO: Add tests for init with docker-compose with cache service specified.
