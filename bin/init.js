@@ -17,20 +17,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const parentDir = path.dirname(__dirname);
 
-export async function initCommand(options) {
+async function initCommand(options) {
     const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
     const packageName = options.name || "qse-server"; // Default to 'qse-server' if no name is specified
     const removeNodemon = options.removeNodemon;
     const removeDependencies = options.removeDeps;
-    const dockerCompose = options.dockerCompose;
-
-    console.log(options);
-    
 
     if (!options.template) {
-        initMenu(initCommand);
+        initMenu(initCommand, options);
         return;
     }
+
+    // Docker Compose options.
+    const dockerCompose = options.dockerCompose;
+    const cacheService = options.cacheService;
+    const skipDb = options.skipDb || false;
 
     if (packageName) {
         const validateResult = validate(packageName);
@@ -68,8 +69,7 @@ export async function initCommand(options) {
     );
 
     const isUrl = templates[selectedTemplate].isUrl;
-    const needDB = templates[selectedTemplate].needDB;
-    let runtimeNeedDB = false;
+    const needDB = templates[selectedTemplate].needDB && !skipDb;
 
     let dockerTemplate =
         selectedTemplate.split("_")[0] === "express" ||
@@ -88,18 +88,19 @@ export async function initCommand(options) {
     const destinationPath = path.join(targetDir);
     const dockerFileDestination = path.join(destinationPath, "Dockerfile");
 
+    let runtimeNeedDB = false;
     if (dockerCompose) {
         try {
-            const userPrompt = await userPrompts(needDB);
-            if (needDB) {
-                runtimeNeedDB = userPrompt.runtimeNeedDB;
-            }
+            console.log();
+            const userPrompt = await userPrompts(needDB, cacheService);
+            runtimeNeedDB = userPrompt.runtimeNeedDB;
 
             const serviceData = await getServicesData(
                 packageName,
                 selectedTemplate,
                 runtimeNeedDB,
                 userPrompt.addCacheService,
+                cacheService,
             );
 
             console.log("Starting server initialization...");
@@ -126,6 +127,7 @@ export async function initCommand(options) {
             return;
         }
     } else {
+        console.log();
         console.log("Starting server initialization...");
     }
 
