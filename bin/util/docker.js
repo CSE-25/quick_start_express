@@ -9,17 +9,17 @@ export async function userPrompts(needDB, cacheService) {
 
     const runtimeNeedDB = needDB
         ? await askConfirmation(
-            "Do you wish to containerize DB service? (Default: Yes)",
-            true,
-        )
+              "Do you wish to containerize DB service? (Default: Yes)",
+              true,
+          )
         : false;
 
     const addCacheService =
         cacheService === undefined
             ? await askConfirmation(
-                "Do you want to add a cache service? (Default: No)",
-                false,
-            )
+                  "Do you want to add a cache service? (Default: No)",
+                  false,
+              )
             : cacheService !== "skip";
 
     return { runtimeNeedDB, addCacheService };
@@ -29,9 +29,9 @@ async function promptCacheService(packageName, cacheService) {
     const image =
         cacheService === undefined
             ? await askSelection(
-                "Select the Docker image for the cache service:",
-                supportedDockerComposeCacheImages,
-            )            
+                  "Select the Docker image for the cache service:",
+                  supportedDockerComposeCacheImages,
+              )
             : cacheService;
 
     let ports;
