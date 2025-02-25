@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const parentDir = path.dirname(__dirname);
 
-async function initCommand(options) {
+export async function initCommand(options) {
     const selectedTemplate = options.template || "basic"; // Default to 'basic' if no template is specified
     const packageName = options.name || "qse-server"; // Default to 'qse-server' if no name is specified
     const removeNodemon = options.removeNodemon;

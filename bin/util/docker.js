@@ -1,6 +1,5 @@
 import { supportedDockerComposeCacheImages, templates } from "../configs.js";
 import chalk from "chalk";
-import { confirmationQuestion, selectionQuestion } from "./question/index.js";
 import { askConfirmation, askSelection } from "./question/inquirer.js";
 
 export async function userPrompts(needDB, cacheService) {
