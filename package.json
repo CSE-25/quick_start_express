@@ -1,6 +1,6 @@
 {
     "name": "quick_start_express",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "A simple CLI tool to generate Express servers from multiple available templates.",
     "type": "module",
     "main": "index.js",

@@ -253,3 +253,4 @@ npm test
 - [Guilherme Almeida Lopes](https://github.com/alguiguilo098)
 - [Nitansh Shankar](https://github.com/BIJJUDAMA)
 - [Priyansh Narang](https://github.com/priyansh-narang2308)
+- [André Felipe Mireski](https://github.com/afmireski)

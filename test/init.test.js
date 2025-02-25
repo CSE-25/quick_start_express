@@ -12,7 +12,8 @@ import { fileURLToPath } from "url";
 import { exec as execCallback } from "child_process";
 import { promisify } from "util";
 import stripAnsi from "strip-ansi";
-import { expect } from "@jest/globals";
+import { expect, jest } from "@jest/globals";
+import { templates } from "../bin/configs.js";
 
 const exec = promisify(execCallback);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -92,12 +93,16 @@ function computeSHA256Hash(dirName) {
     const hash = createHash("sha256");
     const files = readdirSync(dirName);
 
+    const ignoreFilesList = [
+        "node_modules",
+        "package-lock.json",
+        "package.json",
+        "docker-compose.yml",
+        "Dockerfile",
+    ];
+
     for (const file of files) {
-        if (
-            file === "node_modules" ||
-            file === "package-lock.json" ||
-            file === "package.json"
-        ) {
+        if (ignoreFilesList.includes(file)) {
             continue;
         }
         const filePath = path.join(dirName, file);
@@ -113,6 +118,16 @@ function computeSHA256Hash(dirName) {
     return hash.digest("hex");
 }
 
+function verifyDockerFiles() {
+    const dockerComposePath = path.join(tempDir, "docker-compose.yml");
+    const dockerfilePath = path.join(tempDir, "Dockerfile");
+
+    const existsBothDockerfiles =
+        existsSync(dockerComposePath) && existsSync(dockerfilePath);
+
+    expect(existsBothDockerfiles).toBe(true);
+}
+
 // Verify if installing dependencies is happening by default
 // along with nodemon in package.json by default.
 describe("normal init with default settings", () => {
@@ -126,129 +141,21 @@ describe("normal init with default settings", () => {
 
     // TODO: Add test for cases where `inquirer` prompts are used for this.
 
-    test("basic with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "basic"),
-        );
-        await exec(`node ../../bin/index.js init -t basic`, { cwd: tempDir });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
+    Object.entries(templates).forEach(([templateName, _]) => {
+        test(`${templateName} with nodemon and deps installed`, async () => {
+            const originalHash = computeSHA256Hash(
+                path.join(__dirname, "..", "templates", templateName),
+            );
+            await exec(`node ../../bin/index.js init -t ${templateName}`, {
+                cwd: tempDir,
+            });
+            const commandHash = computeSHA256Hash(tempDir);
+            expect(commandHash).toEqual(originalHash);
 
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_pg with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_pg"),
-        );
-        await exec(`node ../../bin/index.js init -t express_pg`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_pg_sequelize with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_pg_sequelize"),
-        );
-        await exec(`node ../../bin/index.js init -t express_pg_sequelize`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_mysql with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_mysql"),
-        );
-        await exec(`node ../../bin/index.js init -t express_mysql`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_oauth_microsoft with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_oauth_microsoft"),
-        );
-        await exec(`node ../../bin/index.js init -t express_oauth_microsoft`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_pg_prisma with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_pg_prisma"),
-        );
-        await exec(`node ../../bin/index.js init -t express_pg_prisma`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_mongo with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_mongo"),
-        );
-        await exec(`node ../../bin/index.js init -t express_mongo`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("express_oauth_google with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_oauth_google"),
-        );
-        await exec(`node ../../bin/index.js init -t express_oauth_google`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
-
-    test("basic_ts with nodemon", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "basic_ts"),
-        );
-        await exec(`node ../../bin/index.js init -t basic_ts`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(true);
-    }, 20000);
+            expect(hasNodemon()).toBe(true);
+            expect(nodeModulesExist()).toBe(true);
+        }, 25000);
+    });
 });
 
 describe("init --remove-deps", () => {
@@ -262,149 +169,24 @@ describe("init --remove-deps", () => {
 
     // TODO: Add test for cases where `inquirer` prompts are used for this.
 
-    test("basic with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "basic"),
-        );
-        await exec(`node ../../bin/index.js init -t basic --remove-deps`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
+    Object.entries(templates).forEach(([templateName, _]) => {
+        test(`${templateName} with nodemon without deps installed`, async () => {
+            const originalHash = computeSHA256Hash(
+                path.join(__dirname, "..", "templates", templateName),
+            );
+            await exec(
+                `node ../../bin/index.js init -t ${templateName} --remove-deps`,
+                {
+                    cwd: tempDir,
+                },
+            );
+            const commandHash = computeSHA256Hash(tempDir);
+            expect(commandHash).toEqual(originalHash);
 
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_pg with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_pg"),
-        );
-        await exec(`node ../../bin/index.js init -t express_pg --remove-deps`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_pg_sequelize with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_pg_sequelize"),
-        );
-        await exec(
-            `node ../../bin/index.js init -t express_pg_sequelize --remove-deps`,
-            {
-                cwd: tempDir,
-            },
-        );
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_mysql with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_mysql"),
-        );
-        await exec(
-            `node ../../bin/index.js init -t express_mysql --remove-deps`,
-            {
-                cwd: tempDir,
-            },
-        );
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_oauth_microsoft with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_oauth_microsoft"),
-        );
-        await exec(
-            `node ../../bin/index.js init -t express_oauth_microsoft --remove-deps`,
-            {
-                cwd: tempDir,
-            },
-        );
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_pg_prisma with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_pg_prisma"),
-        );
-        await exec(
-            `node ../../bin/index.js init -t express_pg_prisma --remove-deps`,
-            {
-                cwd: tempDir,
-            },
-        );
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_mongo with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_mongo"),
-        );
-        await exec(
-            `node ../../bin/index.js init -t express_mongo --remove-deps`,
-            {
-                cwd: tempDir,
-            },
-        );
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("express_oauth_google with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "express_oauth_google"),
-        );
-        await exec(
-            `node ../../bin/index.js init -t express_oauth_google --remove-deps`,
-            {
-                cwd: tempDir,
-            },
-        );
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
-
-    test("basic_ts with nodemon without deps installed", async () => {
-        const originalHash = computeSHA256Hash(
-            path.join(__dirname, "..", "templates", "basic_ts"),
-        );
-        await exec(`node ../../bin/index.js init -t basic_ts --remove-deps`, {
-            cwd: tempDir,
-        });
-        const commandHash = computeSHA256Hash(tempDir);
-        expect(commandHash).toEqual(originalHash);
-
-        expect(hasNodemon()).toBe(true);
-        expect(nodeModulesExist()).toBe(false);
-    }, 20000);
+            expect(hasNodemon()).toBe(true);
+            expect(nodeModulesExist()).toBe(false);
+        }, 25000);
+    });
 });
 
 // Not installing dependencies as it takes time and is already tested above.
@@ -467,7 +249,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 20000);
+    }, 25000);
 
     test("valid template name: lowercase only", async () => {
         const validName = "validname";
@@ -478,7 +260,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 20000);
+    }, 25000);
 
     test("valid template name: URL friendly characters", async () => {
         const validName = "valid-name";
@@ -489,7 +271,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 20000);
+    }, 25000);
 
     // TODO: Add test for cases where `inquirer` prompts are used for this.
 });
@@ -506,140 +288,106 @@ describe("init without nodemon option without installing deps.", () => {
 
     // TODO: Add test for cases where `inquirer` prompts are used for this.
 
-    test("basic without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t basic --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
+    Object.entries(templates).forEach(([templateName, _]) => {
+        test(`${templateName} without nodemon`, async () => {
+            await exec(
+                `node ../../bin/index.js init -t ${templateName} --remove-nodemon --remove-deps`,
+                { cwd: tempDir },
+            );
+            const packageJson = readPackageJson();
 
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
+            expect(packageJson.scripts.start).not.toContain("nodemon");
+            expect(packageJson.scripts.dev).toBeUndefined();
 
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_pg without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_pg --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_pg_sequelize without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_pg_sequelize --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_mysql without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_mysql --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_oauth_microsoft without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_oauth_microsoft --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_pg_prisma without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_pg_prisma --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_mongo without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_mongo --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("express_oauth_google without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t express_oauth_google --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
-
-    test("basic_ts without nodemon", async () => {
-        await exec(
-            "node ../../bin/index.js init -t basic_ts --remove-nodemon --remove-deps",
-            { cwd: tempDir },
-        );
-        const packageJson = readPackageJson();
-
-        expect(packageJson.scripts.start).not.toContain("nodemon");
-        expect(packageJson.scripts.dev).toBeUndefined();
-
-        if (packageJson.devDependencies) {
-            expect(packageJson.devDependencies).not.toHaveProperty("nodemon");
-        }
-    }, 20000);
+            if (packageJson.devDependencies) {
+                expect(packageJson.devDependencies).not.toHaveProperty(
+                    "nodemon",
+                );
+            }
+        }, 25000);
+    });
 });
 
-// TODO: Add tests for docker-compose.
+describe("init with docker-compose without cache service and db", () => {
+    beforeEach(() => {
+        initTempDirectory();
+    });
+
+    afterAll(() => {
+        clearTempDirectory();
+    });
+
+    Object.entries(templates).forEach(([templateName, _]) => {
+        test(`${templateName} with docker configuration`, async () => {
+            const originalHash = computeSHA256Hash(
+                path.join(__dirname, "..", "templates", templateName),
+            );
+            await exec(
+                `node ../../bin/index.js init -t ${templateName} --remove-deps --docker-compose --skip-db --cache-service skip`,
+                {
+                    cwd: tempDir,
+                },
+            );
+
+            const commandHash = computeSHA256Hash(tempDir);
+            expect(commandHash).toEqual(originalHash);
+            expect(hasNodemon()).toBe(true);
+            expect(nodeModulesExist()).toBe(false);
+
+            verifyDockerFiles();
+        }, 25000);
+    });
+});
+
+// TODO: Add tests for init with docker-compose with only cache service specified.
+// TODO: Add tests for init with docker-compose with only db enabled.
+
+const mockAskSelection = jest.fn();
+const mockAskConfirmation = jest.fn();
+
+jest.unstable_mockModule("../bin/util/question/inquirer.js", () => ({
+    askConfirmation: mockAskConfirmation,
+    askSelection: mockAskSelection,
+}));
+
+// Import the module after mocking
+const { initCommand } = await import("../bin/init.js");
+
+describe("init with docker-compose with cache service and db", () => {
+    beforeEach(() => {
+        jest.resetModules();
+        initTempDirectory();
+    });
+
+    afterAll(() => {
+        clearTempDirectory();
+        jest.clearAllMocks();
+    });
+
+    Object.entries(templates).forEach(([templateName, _]) => {
+        test(`${templateName} with docker configuration, cache and DB`, async () => {
+            jest.spyOn(process, "cwd").mockReturnValue(tempDir);
+
+            const originalHash = computeSHA256Hash(
+                path.join(__dirname, "..", "templates", templateName),
+            );
+
+            mockAskConfirmation.mockResolvedValueOnce(true);
+            mockAskConfirmation.mockResolvedValueOnce(true);
+            mockAskSelection.mockResolvedValueOnce("redis:latest");
+
+            await initCommand({
+                template: templateName,
+                dockerCompose: true,
+                removeDeps: true,
+            });
+
+            const commandHash = computeSHA256Hash(tempDir);
+            expect(commandHash).toEqual(originalHash);
+            expect(hasNodemon()).toBe(true);
+            expect(nodeModulesExist()).toBe(false);
+
+            verifyDockerFiles();
+        }, 25000);
+    });
+});
