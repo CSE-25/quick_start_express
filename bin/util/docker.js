@@ -1,6 +1,6 @@
-import { confirm, select } from "@inquirer/prompts";
 import { supportedDockerComposeCacheImages, templates } from "../configs.js";
 import chalk from "chalk";
+import { askConfirmation, askSelection } from "./question/inquirer.js";
 
 export async function userPrompts(needDB, cacheService) {
     if (needDB || cacheService === undefined) {
@@ -8,18 +8,18 @@ export async function userPrompts(needDB, cacheService) {
     }
 
     const runtimeNeedDB = needDB
-        ? await confirm({
-              message: "Do you wish to containerize DB service? (Default: Yes)",
-              default: true,
-          })
+        ? await askConfirmation(
+              "Do you wish to containerize DB service? (Default: Yes)",
+              true,
+          )
         : false;
 
     const addCacheService =
         cacheService === undefined
-            ? await confirm({
-                  message: "Do you want to add a cache service? (Default: No)",
-                  default: false,
-              })
+            ? await askConfirmation(
+                  "Do you want to add a cache service? (Default: No)",
+                  false,
+              )
             : cacheService !== "skip";
 
     return { runtimeNeedDB, addCacheService };
@@ -28,13 +28,10 @@ export async function userPrompts(needDB, cacheService) {
 async function promptCacheService(packageName, cacheService) {
     const image =
         cacheService === undefined
-            ? await select({
-                  message: "Select the Docker image for the cache service:",
-                  choices: supportedDockerComposeCacheImages.map((img) => ({
-                      name: img,
-                      value: img,
-                  })),
-              })
+            ? await askSelection(
+                  "Select the Docker image for the cache service:",
+                  supportedDockerComposeCacheImages,
+              )
             : cacheService;
 
     let ports;
