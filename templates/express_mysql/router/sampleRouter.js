@@ -1,9 +1,12 @@
-import { test, getAllSamples } from "../controller/sampleController.js";
 import { Router } from "express";
 
-const sampleRouter = Router();
+import sampleController from "../controller/sampleController.js";
 
-sampleRouter.get("/test", test);
-sampleRouter.get("/all", getAllSamples);
+export default function (database) {
+    const router = Router();
 
-export default sampleRouter;
+    router.get("/test", (req, res) => sampleController.test(req, res));
+    router.get("/all", (req, res) => sampleController.getAllSamples(req, res, database));
+
+    return router
+}
