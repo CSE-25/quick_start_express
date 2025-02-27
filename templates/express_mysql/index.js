@@ -1,10 +1,10 @@
 import { appendFileSync } from "fs";
 
-import makeApp from "./app.js"
-import database from "./db/database.js"
+import makeApp from "./app.js";
+import database from "./db/database.js";
 import { initLog } from "./logs/initLog.js";
-import connectToDb from "./connection/normalConnection.js"
-import reInitDb from "./db/reInitDb.js"
+import connectToDb from "./connection/normalConnection.js";
+import reInitDb from "./db/reInitDb.js";
 import { appConfig } from "./config/appConfig.js";
 
 const app = makeApp(database);

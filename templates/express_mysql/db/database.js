@@ -28,5 +28,5 @@ export default {
             await db_conn.query("UNLOCK TABLES");
             db_conn.release();
         }
-    }
-}
+    },
+};

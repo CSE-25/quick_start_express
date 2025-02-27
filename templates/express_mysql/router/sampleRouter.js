@@ -6,7 +6,9 @@ export default function (database) {
     const router = Router();
 
     router.get("/test", (req, res) => sampleController.test(req, res));
-    router.get("/all", (req, res) => sampleController.getAllSamples(req, res, database));
+    router.get("/all", (req, res) =>
+        sampleController.getAllSamples(req, res, database),
+    );
 
-    return router
+    return router;
 }

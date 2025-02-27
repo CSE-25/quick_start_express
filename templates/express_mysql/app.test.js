@@ -1,11 +1,11 @@
 import request from "supertest";
 import { expect, jest } from "@jest/globals";
-import makeApp from "./app.js"
+import makeApp from "./app.js";
 
 const expectedSamples = [
     { id: 1, name: "sample1" },
-    { id: 2, name: "sample2" }
-]
+    { id: 2, name: "sample2" },
+];
 
 const getSamples = jest.fn().mockImplementation(async (req, res) => {
     return res.status(200).send({
@@ -14,8 +14,7 @@ const getSamples = jest.fn().mockImplementation(async (req, res) => {
     });
 });
 
-
-const app = makeApp({ getSamples })
+const app = makeApp({ getSamples });
 
 describe("API Endpoints", () => {
     it("should return success message on GET /api/sample/test", async () => {
@@ -29,7 +28,10 @@ describe("API Endpoints", () => {
     it("should return all samples on GET /api/sample/all", async () => {
         const res = await request(app).get("/api/sample/all");
         expect(getSamples.mock.calls.length).toBe(1);
-        expect(getSamples).toHaveBeenCalledWith(expect.any(Object), expect.any(Object));
+        expect(getSamples).toHaveBeenCalledWith(
+            expect.any(Object),
+            expect.any(Object),
+        );
         expect(res.statusCode).toBe(200);
         expect(res.body).toHaveProperty(
             "MESSAGE",

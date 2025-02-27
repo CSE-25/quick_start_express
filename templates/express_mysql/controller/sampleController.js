@@ -7,5 +7,5 @@ export default {
 
     async getAllSamples(_, res, database) {
         await database.getSamples(_, res);
-    }
-}
+    },
+};
