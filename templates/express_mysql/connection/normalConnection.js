@@ -6,6 +6,7 @@ const connectToDb = () => {
     let db = null;
     try {
         db = createConnection(appConfig.db);
+        db.connect();
         return db;
     } catch (err) {
         const timeStamp = new Date().toLocaleString();
