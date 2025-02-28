@@ -1,4 +1,5 @@
 import { appendFileSync } from "fs";
+import "dotenv/config.js";
 
 import makeApp from "./app.js";
 import database from "./db/database.js";
