@@ -64,11 +64,11 @@ export default {
 
 Choose a template.
 
-<div class="custom-select">
+<div class="qse-custom-select">
     <select v-model="selectedTemplate">
         <option disabled value="">Select a template</option>
         <option v-for="(val, key) in templates" :value="val.name">
-            {{key}}
+          {{ key }}
         </option>
     </select>
 </div>
@@ -77,7 +77,7 @@ Choose a template.
 
 Nodemon is included by default for hot reloading. Check this option if you don't want to include nodemon.
 
-<div class="check">
+<div class="qse-check">
     <input type="checkbox" id="remove-nodemon" v-model="removeNodemon">
     <label for="remove-nodemon">Exclude nodemon</label>
 </div>
@@ -86,7 +86,7 @@ Nodemon is included by default for hot reloading. Check this option if you don't
 
 All dependencies are installed by default. Check this option if you don't want to install them.
 
-<div class="check">
+<div class="qse-check">
     <input type="checkbox" id="remove-deps" v-model="removeDeps">
     <label for="remove-deps">Exclude dependencies</label>
 </div>
@@ -95,7 +95,7 @@ All dependencies are installed by default. Check this option if you don't want t
 
 Check this option if you want to have a Docker Compose in your project.
 
-<div class="check">
+<div class="qse-check">
     <input type="checkbox" id="add-docker-compose" v-model="addDockerCompose">
     <label for="add-docker-compose">Add Docker Compose file</label>
 </div>
@@ -104,9 +104,9 @@ Check this option if you want to have a Docker Compose in your project.
 
 Enter a name for your server app. Default name is `qse-server`.
 
-<div>
+<div class="qse-input-container">
     <input type="text" id="package-name" v-model="packageName" placeholder="Package Name">
-    <p class="error-message" v-if="validatePackageName()">{{validatePackageName()}}</p>
+    <p class="qse-error-message" v-if="validatePackageName()">{{ validatePackageName() }}</p>
 </div>
 
 ## The command
@@ -119,8 +119,11 @@ npm i -g quick_start_express
 ```
 
 <style>
+  .qse-input-container {
+    margin-bottom: 1.5rem;
+  }
 
-input[type="text"] {
+  .qse-input-container input[type="text"] {
     background-color: #161618;
     width: 100%;
     min-width: 200px;
@@ -130,37 +133,33 @@ input[type="text"] {
     font-size: 1rem;
     color: #fff;
     transition: border-color 0.2s ease, background-color 0.2s ease;
-}
+ }
 
-input[type="text"]:hover {
+  .qse-input-container input[type="text"]:hover,
+  .qse-input-container input[type="text"]:focus {
     border-color: #a8b1ff;
     background-color: #1e1e20;
-}
+  }
 
-input[type="text"]:focus {
-    border-color: #a8b1ff;
-    background-color: #1e1e20;
-}
-
-input[type="text"]::placeholder {
+  .qse-input-container input[type="text"]::placeholder {
     color: #a8a8a8;
-}
+  }
 
-.error-message {
+  .qse-error-message {
     color: red;
-}
+  }
 
-label {
+  label {
     margin-bottom: 0.5rem;
     display: inline-block;
-}
+  }
 
-.custom-select {
+  .qse-custom-select {
     min-width: 352px;
     position: relative;
-}
+  }
 
-.custom-select select {
+  .qse-custom-select select {
     appearance: none;
     width: 100%;
     padding: 8px 16px;
@@ -171,56 +170,51 @@ label {
     transition: border-color 0.2s ease, background-color 0.2s ease;
     background-color: #161618;
     font-size: 1rem;
-}
+  }
 
-.custom-select select:hover {
+  .qse-custom-select select:hover,
+  .qse-custom-select select:focus {
     border-color: #a8b1ff;
     background-color: #1e1e20;
-}
+  }
 
-.custom-select select:focus {
-    border-color: #a8b1ff;
-    background-color: #1e1e20;
-}
-
-.custom-select::before,
-.custom-select::after {
+  .qse-custom-select::before,
+  .qse-custom-select::after {
     --size: 4px;
     content: "";
     position: absolute;
     right: 16px;
     pointer-events: none;
-}
+  }
 
-.custom-select::before {
+  .qse-custom-select::before {
     border-left: var(--size) solid transparent;
     border-right: var(--size) solid transparent;
     border-bottom: var(--size) solid #fff;
     top: 40%;
-}
+  }
 
-.custom-select::after {
+  .qse-custom-select::after {
     border-left: var(--size) solid transparent;
     border-right: var(--size) solid transparent;
     border-top: var(--size) solid #fff;
     top: 55%;
-}
+  }
 
-.check {
+  .qse-check {
     display: flex;
     align-items: center;
     background-color: #161618;
     padding: 0.75rem 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;
-}
+  }
 
-.check input[type="checkbox"] {
+  .qse-check input[type="checkbox"] {
     margin-right: 1rem;
-}
+  }
 
-.check label {
+  .qse-check label {
     margin-bottom: 0;
-}
-
+  }
 </style>
