@@ -153,4 +153,14 @@ export const templates = {
         name: "express_oauth_google",
         serverPort: "8080:8080",
     },
+    express_auth: {
+        name: "express_auth",
+        isUrl: true,
+        needDB: true,
+        dbPort: "27017:27017",
+        dbName: "MongoDB",
+        serverPort: "8080:8080",
+        dbDockerImage: "mongo:latest",
+        dbDataPath: "/data/db",
+    },
 };
