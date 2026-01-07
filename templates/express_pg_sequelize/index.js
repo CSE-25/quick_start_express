@@ -27,7 +27,7 @@ app.get("/db-test", async (req, res) => {
         const [results, metadata] = await db.query("SELECT NOW()");
         return res
             .status(200)
-            .json({ message: "DB query successful!", data: results });
+            .json({ message: "DB Query Successful!", data: results });
     } catch (error) {
         return res
             .status(500)
@@ -36,6 +36,10 @@ app.get("/db-test", async (req, res) => {
 });
 
 // Start the server
-app.listen(appConfig.PORT, () => {
-    console.log(`Server is running on http://localhost:${appConfig.PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+    app.listen(appConfig.PORT, () => {
+        console.log(`Server is running on http://localhost:${appConfig.PORT}`);
+    });
+}
+
+export default app;
