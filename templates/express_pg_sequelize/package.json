@@ -7,6 +7,7 @@
         "dev": "nodemon index.js",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
     },
+    "type": "module",
     "dependencies": {
         "express": "^4.17.1",
         "pg": "^8.6.0",

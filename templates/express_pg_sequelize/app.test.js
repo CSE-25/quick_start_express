@@ -1,11 +1,16 @@
-import request from "supertest";
 import { jest } from "@jest/globals";
-import app from "./index.js";
-import db from "./db.js";
-jest.mock("./db.js", () => ({
-    authenticate: jest.fn(() => Promise.resolve()),
-    query: jest.fn(() => Promise.resolve([[{ "now()": new Date() }], {}])),
+import request from "supertest";
+
+jest.unstable_mockModule("./db.js", () => ({
+    default: {
+        authenticate: jest.fn(() => Promise.resolve()),
+        query: jest.fn(() => Promise.resolve([[{ "now()": new Date() }], {}])),
+    },
 }));
+
+const { default: app } = await import("./index.js");
+const { default: db } = await import("./db.js");
+
 describe("express_pg_sequelize API Endpoints", () => {
     it("should return welcome message on GET /", async () => {
         const res = await request(app).get("/");
