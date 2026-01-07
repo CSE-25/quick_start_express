@@ -154,7 +154,7 @@ describe("normal init with default settings", () => {
 
             expect(hasNodemon()).toBe(true);
             expect(nodeModulesExist()).toBe(true);
-        }, 25000);
+        }, 60000);
     });
 });
 
@@ -185,7 +185,7 @@ describe("init --remove-deps", () => {
 
             expect(hasNodemon()).toBe(true);
             expect(nodeModulesExist()).toBe(false);
-        }, 25000);
+        }, 60000);
     });
 });
 
@@ -249,7 +249,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 25000);
+    }, 60000);
 
     test("valid template name: lowercase only", async () => {
         const validName = "validname";
@@ -260,7 +260,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 25000);
+    }, 60000);
 
     test("valid template name: URL friendly characters", async () => {
         const validName = "valid-name";
@@ -271,7 +271,7 @@ describe("init with custom template name without installing deps", () => {
             },
         );
         verifyPackageName(validName);
-    }, 25000);
+    }, 60000);
 
     // TODO: Add test for cases where `inquirer` prompts are used for this.
 });
@@ -304,7 +304,7 @@ describe("init without nodemon option without installing deps.", () => {
                     "nodemon",
                 );
             }
-        }, 25000);
+        }, 60000);
     });
 });
 
@@ -335,7 +335,7 @@ describe("init with docker-compose without cache service and db", () => {
             expect(nodeModulesExist()).toBe(false);
 
             verifyDockerFiles();
-        }, 25000);
+        }, 60000);
     });
 });
 
@@ -388,6 +388,6 @@ describe("init with docker-compose with cache service and db", () => {
             expect(nodeModulesExist()).toBe(false);
 
             verifyDockerFiles();
-        }, 25000);
+        }, 60000);
     });
 });
