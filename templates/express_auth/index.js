@@ -1,5 +1,5 @@
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 
 import { authConfig } from "./config/authConfig.js";
 import { authRouter } from "./router/authRouter.js";
